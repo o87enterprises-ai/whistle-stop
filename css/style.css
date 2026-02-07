@@ -1,0 +1,114 @@
+/* Custom styles for The Whistle Stop Application */
+
+/* Base styles */
+:root {
+  --charcoal: #1A1A1A;
+  --barberRed: #C8102E;
+  --steamWhite: #F5F5F5;
+  --leather: #3E2723;
+  --brass: #B8860B;
+}
+
+/* Typography enhancements */
+.font-gothic {
+  font-family: 'Staatliches', sans-serif;
+}
+
+.font-railway {
+  font-family: 'Inter', sans-serif;
+}
+
+.font-serif {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Custom animations */
+.newspaper-texture {
+  background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+}
+
+.barber-pole-bg {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--barberRed),
+    var(--barberRed) 20px,
+    var(--steamWhite) 20px,
+    var(--steamWhite) 40px,
+    var(--charcoal) 40px,
+    var(--charcoal) 60px
+  );
+  background-size: 200% 200%;
+  animation: barberPole 5s linear infinite;
+}
+
+@keyframes barberPole {
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 100%; }
+}
+
+.steam-float {
+  animation: steam 4s ease-in-out infinite;
+}
+
+@keyframes steam {
+  0%, 100% { transform: translateY(0) opacity(0.5); }
+  50% { transform: translateY(-10px) opacity(0.8); }
+}
+
+.brass-glow:hover {
+  box-shadow: 0 0 15px rgba(184, 134, 11, 0.4);
+}
+
+.leather-texture {
+  background-image: url("https://www.transparenttextures.com/patterns/leather.png");
+  background-color: var(--leather);
+}
+
+.ticket-bg {
+  background-image: radial-gradient(circle at 0 50%, transparent 10px, #fff 10px),
+                    radial-gradient(circle at 100% 50%, transparent 10px, #fff 10px);
+  background-size: 100% 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .mobile-menu-open {
+    display: block;
+  }
+}
+
+/* Utility classes */
+.bg-charcoal { background-color: var(--charcoal); }
+.text-charcoal { color: var(--charcoal); }
+.bg-barberRed { background-color: var(--barberRed); }
+.text-barberRed { color: var(--barberRed); }
+.bg-steamWhite { background-color: var(--steamWhite); }
+.text-steamWhite { color: var(--steamWhite); }
+.bg-leather { background-color: var(--leather); }
+.text-leather { color: var(--leather); }
+.bg-brass { background-color: var(--brass); }
+.text-brass { color: var(--brass); }
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--charcoal);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--barberRed);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brass);
+}

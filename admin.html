@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station Master Dashboard | The Whistle Stop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&family=Inter:wght @300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        charcoal: '#1A1A1A',
+                        barberRed: '#C8102E',
+                        steamWhite: '#F5F5F5',
+                        leather: '#3E2723',
+                        brass: '#B8860B',
+                    },
+                    fontFamily: {
+                        gothic: ['Staatliches', 'sans-serif'],
+                        railway: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-charcoal text-steamWhite font-railway flex h-screen overflow-hidden">
+
+    <!-- Top Bar -->
+    <header class="fixed top-0 left-0 right-0 h-16 bg-black border-b border-white/10 z-50 flex items-center justify-between px-6">
+        <div class="flex items-center gap-4">
+            <img src="/uploads/1770458100780-9ayi9n.png" alt="Logo" class="h-8">
+            <h1 class="font-gothic text-xl tracking-widest">STATION MASTER COMMAND</h1>
+        </div>
+        <div class="flex items-center gap-6">
+            <a href="index.html" class="bg-barberRed px-4 py-2 rounded-sm font-gothic text-sm hover:bg-red-700 transition-colors">RETURN HOME</a>
+            <div class="flex items-center gap-2 text-barberRed">
+                <i data-feather="wind" class="w-4 h-4"></i>
+                <span class="font-gothic text-sm tracking-widest">STEAM PRESSURE: OPTIMAL</span>
+            </div>
+            <button id="notifications-btn" class="relative">
+                <i data-feather="bell"></i>
+                <span class="absolute -top-1 -right-1 bg-barberRed text-[10px] w-4 h-4 rounded-full flex items-center justify-center">3</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Sidebar (Tools) -->
+    <nav class="w-20 bg-black border-r border-white/10 pt-20 flex flex-col items-center gap-8">
+        <button class="p-3 text-brass hover:bg-white/5 rounded-lg transition-all"><i data-feather="grid"></i></button>
+        <button id="appointments-btn" class="p-3 text-white/40 hover:bg-white/5 rounded-lg transition-all"><i data-feather="scissors"></i></button>
+        <button id="customers-btn" class="p-3 text-white/40 hover:bg-white/5 rounded-lg transition-all"><i data-feather="users"></i></button>
+        <button id="products-btn" class="p-3 text-white/40 hover:bg-white/5 rounded-lg transition-all"><i data-feather="package"></i></button>
+        <button class="p-3 text-white/40 hover:bg-white/5 rounded-lg transition-all"><i data-feather="settings"></i></button>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <main class="flex-1 pt-16 overflow-y-auto">
+        <div class="p-8">
+            
+            <!-- Command Gauges -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-black/50 p-6 border border-white/10 rounded-sm">
+                    <p class="text-xs uppercase tracking-widest opacity-50 mb-2">Today's Cargo</p>
+                    <div class="flex justify-between items-end">
+                        <h3 class="font-gothic text-4xl">24</h3>
+                        <span class="text-green-500 text-sm font-bold">+12%</span>
+                    </div>
+                    <div class="w-full h-1 bg-white/10 mt-4">
+                        <div class="w-3/4 h-full bg-barberRed"></div>
+                    </div>
+                </div>
+                <div class="bg-black/50 p-6 border border-white/10 rounded-sm">
+                    <p class="text-xs uppercase tracking-widest opacity-50 mb-2">Revenue Gauge</p>
+                    <div class="flex justify-between items-end">
+                        <h3 class="font-gothic text-4xl">$1,420</h3>
+                        <span class="text-brass text-sm font-bold">PEAK</span>
+                    </div>
+                    <div class="w-full h-1 bg-white/10 mt-4">
+                        <div class="w-1/2 h-full bg-brass"></div>
+                    </div>
+                </div>
+                <div class="bg-black/50 p-6 border border-white/10 rounded-sm">
+                    <p class="text-xs uppercase tracking-widest opacity-50 mb-2">Chair Utility</p>
+                    <div class="flex justify-between items-end">
+                        <h3 class="font-gothic text-4xl">92%</h3>
+                        <span class="text-barberRed text-sm font-bold">HOT</span>
+                    </div>
+                    <div class="w-full h-1 bg-white/10 mt-4">
+                        <div class="w-[92%] h-full bg-green-500"></div>
+                    </div>
+                </div>
+                <div class="bg-black/50 p-6 border border-white/10 rounded-sm">
+                    <p class="text-xs uppercase tracking-widest opacity-50 mb-2">Waitlist</p>
+                    <div class="flex justify-between items-end">
+                        <h3 class="font-gothic text-4xl">8</h3>
+                        <span class="text-white/40 text-sm">STATIONED</span>
+                    </div>
+                    <div class="w-full h-1 bg-white/10 mt-4">
+                        <div class="w-1/4 h-full bg-white/40"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="grid md:grid-cols-3 gap-8">
+                
+                <!-- Appointment Board -->
+                <div class="md:col-span-2 bg-black/50 border border-white/10 rounded-sm overflow-hidden">
+                    <div class="p-4 border-b border-white/10 flex justify-between items-center">
+                        <h3 class="font-gothic text-xl tracking-widest">TRACK SCHEDULE</h3>
+                        <div class="flex gap-2">
+                            <button class="bg-barberRed px-4 py-1 text-xs font-gothic">SIGNAL BOOST</button>
+                            <button class="bg-white/10 px-4 py-1 text-xs font-gothic">ADD ENTRY</button>
+                        </div>
+                    </div>
+                    <div class="p-0">
+                        <!-- Simulated Gantt/Schedule -->
+                        <div class="grid grid-cols-6 border-b border-white/5 text-[10px] uppercase tracking-widest opacity-40 p-2">
+                            <div>CHAIR</div>
+                            <div>09:00</div>
+                            <div>10:00</div>
+                            <div>11:00</div>
+                            <div>12:00</div>
+                            <div>13:00</div>
+                        </div>
+                        <div class="p-2 space-y-4">
+                            <div class="flex items-center gap-4">
+                                <span class="w-12 font-gothic text-brass">C-01</span>
+                                <div class="flex-1 h-10 bg-white/5 relative">
+                                    <div class="absolute left-0 w-1/4 h-full bg-barberRed/40 border-l-4 border-barberRed p-2 text-[10px]">THOMAS W.</div>
+                                    <div class="absolute left-[30%] w-1/3 h-full bg-brass/40 border-l-4 border-brass p-2 text-[10px]">ARTHUR S.</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="w-12 font-gothic text-brass">C-02</span>
+                                <div class="flex-1 h-10 bg-white/5 relative">
+                                    <div class="absolute left-[10%] w-1/2 h-full bg-barberRed/40 border-l-4 border-barberRed p-2 text-[10px]">HENRY FORD</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="w-12 font-gothic text-brass">C-03</span>
+                                <div class="flex-1 h-10 bg-white/5 relative">
+                                    <div class="absolute left-0 w-full h-full flex items-center justify-center border-2 border-dashed border-white/10 text-white/20 text-[10px]">OPEN FOR BOOKING</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Telegram Feed -->
+                <div class="bg-leather p-6 rounded-sm border border-brass/20">
+                    <h3 class="font-gothic text-xl tracking-widest mb-6 border-b border-brass/20 pb-2">TELEGRAM FEED</h3>
+                    <div class="space-y-4 font-mono text-xs">
+                        <div class="p-3 bg-black/30 border-l-2 border-barberRed">
+                            <p class="text-barberRed mb-1">[14:22] URGENT</p>
+                            <p>CLIENT "AL CAPONE" REQUESTED CHAIR 1 FOR 16:00. ADVISE.</p>
+                        </div>
+                        <div class="p-3 bg-black/30 border-l-2 border-green-500">
+                            <p class="text-green-500 mb-1">[14:15] LOG</p>
+                            <p>INVENTORY ALERT: "BAY RUM AFTERSHAVE" RUNNING LOW (2 UNITS).</p>
+                        </div>
+                        <div class="p-3 bg-black/30 border-l-2 border-brass">
+                            <p class="text-brass mb-1">[13:50] INFO</p>
+                            <p>NEW MEMBER JOINED: "SAMUEL L." (CONDUCTOR TIER).</p>
+                        </div>
+                    </div>
+                    <button class="w-full mt-8 border border-brass/50 py-2 text-brass font-gothic text-sm hover:bg-brass hover:text-charcoal transition-all">VIEW ALL MESSAGES</button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Notifications Panel -->
+    <div id="notifications-panel" class="hidden fixed top-16 right-6 mt-2 w-80 bg-black border border-white/20 rounded-sm shadow-lg z-50">
+        <div class="p-4 border-b border-white/10">
+            <h3 class="font-gothic text-lg">NOTIFICATIONS</h3>
+        </div>
+        <div class="p-4 max-h-96 overflow-y-auto">
+            <div class="space-y-3">
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <p class="font-gothic text-sm text-barberRed">NEW BOOKING</p>
+                    <p class="text-sm">John Doe booked a haircut for Saturday at 2:00 PM</p>
+                    <p class="text-xs text-steamWhite/50">Just now</p>
+                </div>
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <p class="font-gothic text-sm text-brass">PAYMENT RECEIVED</p>
+                    <p class="text-sm">Jane Smith paid $45 for Hot Towel Shave</p>
+                    <p class="text-xs text-steamWhite/50">5 minutes ago</p>
+                </div>
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <p class="font-gothic text-sm text-green-500">APPOINTMENT COMPLETED</p>
+                    <p class="text-sm">Robert Johnson finished Classic Cut</p>
+                    <p class="text-xs text-steamWhite/50">12 minutes ago</p>
+                </div>
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <p class="font-gothic text-sm text-purple-500">NEW CUSTOMER</p>
+                    <p class="text-sm">Michael Brown joined as new client</p>
+                    <p class="text-xs text-steamWhite/50">1 hour ago</p>
+                </div>
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <p class="font-gothic text-sm text-blue-500">LOW STOCK</p>
+                    <p class="text-sm">Bay Rum After-Shave running low</p>
+                    <p class="text-xs text-steamWhite/50">2 hours ago</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appointments Panel -->
+    <div id="appointments-panel" class="hidden fixed top-20 left-20 w-80 h-[calc(100vh-5rem)] bg-black border border-white/20 rounded-sm shadow-lg z-40 overflow-y-auto">
+        <div class="p-4 border-b border-white/10">
+            <h3 class="font-gothic text-lg">APPOINTMENTS</h3>
+        </div>
+        <div class="p-4">
+            <div class="space-y-3">
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <p class="font-gothic text-sm text-brass">John Doe</p>
+                    <p class="text-sm">Haircut & Style</p>
+                    <p class="text-xs text-steamWhite/50">Sat, Feb 7 • 2:00 PM</p>
+                </div>
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <p class="font-gothic text-sm text-brass">Jane Smith</p>
+                    <p class="text-sm">Hot Towel Shave</p>
+                    <p class="text-xs text-steamWhite/50">Sat, Feb 7 • 3:30 PM</p>
+                </div>
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <p class="font-gothic text-sm text-brass">Robert Johnson</p>
+                    <p class="text-sm">Beard Trim & Shape</p>
+                    <p class="text-xs text-steamWhite/50">Sat, Feb 7 • 4:15 PM</p>
+                </div>
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <p class="font-gothic text-sm text-brass">Michael Brown</p>
+                    <p class="text-sm">Full Service Experience</p>
+                    <p class="text-xs text-steamWhite/50">Sun, Feb 8 • 11:00 AM</p>
+                </div>
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <p class="font-gothic text-sm text-brass">Sarah Williams</p>
+                    <p class="text-sm">Classic Cut</p>
+                    <p class="text-xs text-steamWhite/50">Sun, Feb 8 • 1:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customers Panel -->
+    <div id="customers-panel" class="hidden fixed top-20 left-20 w-80 h-[calc(100vh-5rem)] bg-black border border-white/20 rounded-sm shadow-lg z-40 overflow-y-auto">
+        <div class="p-4 border-b border-white/10">
+            <h3 class="font-gothic text-lg">CUSTOMERS</h3>
+        </div>
+        <div class="p-4">
+            <div class="space-y-3">
+                <div class="customer-item">
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-sm cursor-pointer customer-header">
+                        <div class="flex justify-between items-center">
+                            <p class="font-gothic text-sm text-brass">John Doe</p>
+                            <span class="font-gothic text-sm">$1,240</span>
+                        </div>
+                        <p class="text-xs text-steamWhite/50">VIP Customer • 15 visits</p>
+                    </div>
+                    <div class="customer-details hidden p-3 bg-white/10 border border-white/10 rounded-sm mt-2">
+                        <p class="font-gothic text-sm mb-2">Services this year: $1,240</p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between border-b border-white/10 pb-1">
+                                <span>Haircut & Style</span>
+                                <span>Jan 15, 2024</span>
+                            </div>
+                            <div class="flex justify-between border-b border-white/10 pb-1">
+                                <span>Hot Towel Shave</span>
+                                <span>Dec 20, 2023</span>
+                            </div>
+                            <div class="flex justify-between border-b border-white/10 pb-1">
+                                <span>Beard Trim & Shape</span>
+                                <span>Nov 25, 2023</span>
+                            </div>
+                            <div class="flex justify-between border-b border-white/10 pb-1">
+                                <span>Full Service Experience</span>
+                                <span>Oct 10, 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="customer-item">
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-sm cursor-pointer customer-header">
+                        <div class="flex justify-between items-center">
+                            <p class="font-gothic text-sm text-brass">Jane Smith</p>
+                            <span class="font-gothic text-sm">$890</span>
+                        </div>
+                        <p class="text-xs text-steamWhite/50">Regular Customer • 10 visits</p>
+                    </div>
+                    <div class="customer-details hidden p-3 bg-white/10 border border-white/10 rounded-sm mt-2">
+                        <p class="font-gothic text-sm mb-2">Services this year: $890</p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between border-b border-white/10 pb-1">
+                                <span>Hot Towel Shave</span>
+                                <span>Jan 28, 2024</span>
+                            </div>
+                            <div class="flex justify-between border-b border-white/10 pb-1">
+                                <span>Beard Trim & Shape</span>
+                                <span>Dec 15, 2023</span>
+                            </div>
+                            <div class="flex justify-between border-b border-white/10 pb-1">
+                                <span>Haircut & Style</span>
+                                <span>Nov 10, 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="customer-item">
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-sm cursor-pointer customer-header">
+                        <div class="flex justify-between items-center">
+                            <p class="font-gothic text-sm text-brass">Robert Johnson</p>
+                            <span class="font-gothic text-sm">$650</span>
+                        </div>
+                        <p class="text-xs text-steamWhite/50">New Customer • 6 visits</p>
+                    </div>
+                    <div class="customer-details hidden p-3 bg-white/10 border border-white/10 rounded-sm mt-2">
+                        <p class="font-gothic text-sm mb-2">Services this year: $650</p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between border-b border-white/10 pb-1">
+                                <span>Classic Cut</span>
+                                <span>Feb 1, 2024</span>
+                            </div>
+                            <div class="flex justify-between border-b border-white/10 pb-1">
+                                <span>Hot Towel Shave</span>
+                                <span>Jan 18, 2024</span>
+                            </div>
+                            <div class="flex justify-between border-b border-white/10 pb-1">
+                                <span>Beard Trim & Shape</span>
+                                <span>Dec 5, 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="customer-item">
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-sm cursor-pointer customer-header">
+                        <div class="flex justify-between items-center">
+                            <p class="font-gothic text-sm text-brass">Michael Brown</p>
+                            <span class="font-gothic text-sm">$420</span>
+                        </div>
+                        <p class="text-xs text-steamWhite/50">Regular Customer • 8 visits</p>
+                    </div>
+                    <div class="customer-details hidden p-3 bg-white/10 border border-white/10 rounded-sm mt-2">
+                        <p class="font-gothic text-sm mb-2">Services this year: $420</p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between border-b border-white/10 pb-1">
+                                <span>Full Service Experience</span>
+                                <span>Jan 5, 2024</span>
+                            </div>
+                            <div class="flex justify-between border-b border-white/10 pb-1">
+                                <span>Haircut & Style</span>
+                                <span>Dec 12, 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Panel -->
+    <div id="products-panel" class="hidden fixed top-20 left-20 w-80 h-[calc(100vh-5rem)] bg-black border border-white/20 rounded-sm shadow-lg z-40 overflow-y-auto">
+        <div class="p-4 border-b border-white/10">
+            <h3 class="font-gothic text-lg">PRODUCTS SOLD</h3>
+        </div>
+        <div class="p-4">
+            <div class="space-y-3">
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <div class="flex justify-between items-center">
+                        <p class="font-gothic text-sm text-brass">Steam-Whistle Pomade</p>
+                        <span class="font-gothic text-sm">$18.99</span>
+                    </div>
+                    <div class="flex justify-between text-xs mt-2">
+                        <span class="text-steamWhite/70">Qty Sold: <span class="text-barberRed font-bold">42</span></span>
+                        <span class="text-steamWhite/70">Profit: <span class="text-green-500 font-bold">$380.22</span></span>
+                    </div>
+                </div>
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <div class="flex justify-between items-center">
+                        <p class="font-gothic text-sm text-brass">Bay Rum After-Shave</p>
+                        <span class="font-gothic text-sm">$24.99</span>
+                    </div>
+                    <div class="flex justify-between text-xs mt-2">
+                        <span class="text-steamWhite/70">Qty Sold: <span class="text-barberRed font-bold">28</span></span>
+                        <span class="text-steamWhite/70">Profit: <span class="text-green-500 font-bold">$420.84</span></span>
+                    </div>
+                </div>
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <div class="flex justify-between items-center">
+                        <p class="font-gothic text-sm text-brass">Barber's Canvas Brush</p>
+                        <span class="font-gothic text-sm">$32.50</span>
+                    </div>
+                    <div class="flex justify-between text-xs mt-2">
+                        <span class="text-steamWhite/70">Qty Sold: <span class="text-barberRed font-bold">15</span></span>
+                        <span class="text-steamWhite/70">Profit: <span class="text-green-500 font-bold">$287.50</span></span>
+                    </div>
+                </div>
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <div class="flex justify-between items-center">
+                        <p class="font-gothic text-sm text-brass">Railroad Stripe Towels</p>
+                        <span class="font-gothic text-sm">$14.99</span>
+                    </div>
+                    <div class="flex justify-between text-xs mt-2">
+                        <span class="text-steamWhite/70">Qty Sold: <span class="text-barberRed font-bold">36</span></span>
+                        <span class="text-steamWhite/70">Profit: <span class="text-green-500 font-bold">$269.64</span></span>
+                    </div>
+                </div>
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <div class="flex justify-between items-center">
+                        <p class="font-gothic text-sm text-brass">Vintage Safety Razor</p>
+                        <span class="font-gothic text-sm">$45.00</span>
+                    </div>
+                    <div class="flex justify-between text-xs mt-2">
+                        <span class="text-steamWhite/70">Qty Sold: <span class="text-barberRed font-bold">8</span></span>
+                        <span class="text-steamWhite/70">Profit: <span class="text-green-500 font-bold">$180.00</span></span>
+                    </div>
+                </div>
+                <div class="p-3 bg-white/5 border border-white/10 rounded-sm">
+                    <div class="flex justify-between items-center">
+                        <p class="font-gothic text-sm text-brass">Barber's Cologne</p>
+                        <span class="font-gothic text-sm">$29.99</span>
+                    </div>
+                    <div class="flex justify-between text-xs mt-2">
+                        <span class="text-steamWhite/70">Qty Sold: <span class="text-barberRed font-bold">22</span></span>
+                        <span class="text-steamWhite/70">Profit: <span class="text-green-500 font-bold">$384.18</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 p-3 bg-barberRed/10 border border-barberRed/30 rounded-sm">
+                <div class="flex justify-between font-gothic text-sm">
+                    <span>TOTAL SALES</span>
+                    <span>$1,922.38</span>
+                </div>
+                <div class="flex justify-between font-gothic text-sm mt-1">
+                    <span>TOTAL QUANTITY</span>
+                    <span>151</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        feather.replace();
+        
+        // Notifications panel functionality
+        const notificationsBtn = document.getElementById('notifications-btn');
+        const notificationsPanel = document.getElementById('notifications-panel');
+        
+        if (notificationsBtn && notificationsPanel) {
+            notificationsBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                notificationsPanel.classList.toggle('hidden');
+                
+                // Close other panels when notifications panel opens
+                document.getElementById('appointments-panel').classList.add('hidden');
+                document.getElementById('customers-panel').classList.add('hidden');
+            });
+            
+            // Close notifications panel when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInsideNotificationsBtn = notificationsBtn.contains(event.target);
+                const isClickInsideNotificationsPanel = notificationsPanel.contains(event.target);
+                
+                if (!isClickInsideNotificationsBtn && !isClickInsideNotificationsPanel && 
+                    !notificationsPanel.classList.contains('hidden')) {
+                    notificationsPanel.classList.add('hidden');
+                }
+            });
+        }
+        
+        // Appointments panel functionality
+        const appointmentsBtn = document.getElementById('appointments-btn');
+        const appointmentsPanel = document.getElementById('appointments-panel');
+        
+        if (appointmentsBtn && appointmentsPanel) {
+            appointmentsBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                appointmentsPanel.classList.toggle('hidden');
+                
+                // Close other panels when appointments panel opens
+                notificationsPanel.classList.add('hidden');
+                document.getElementById('customers-panel').classList.add('hidden');
+            });
+            
+            // Close appointments panel when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInsideAppointmentsBtn = appointmentsBtn.contains(event.target);
+                const isClickInsideAppointmentsPanel = appointmentsPanel.contains(event.target);
+                
+                if (!isClickInsideAppointmentsBtn && !isClickInsideAppointmentsPanel && 
+                    !appointmentsPanel.classList.contains('hidden')) {
+                    appointmentsPanel.classList.add('hidden');
+                }
+            });
+        }
+        
+        // Customers panel functionality
+        const customersBtn = document.getElementById('customers-btn');
+        const customersPanel = document.getElementById('customers-panel');
+        
+        if (customersBtn && customersPanel) {
+            customersBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                customersPanel.classList.toggle('hidden');
+                
+                // Close other panels when customers panel opens
+                notificationsPanel.classList.add('hidden');
+                appointmentsPanel.classList.add('hidden');
+            });
+            
+            // Close customers panel when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInsideCustomersBtn = customersBtn.contains(event.target);
+                const isClickInsideCustomersPanel = customersPanel.contains(event.target);
+                
+                if (!isClickInsideCustomersBtn && !isClickInsideCustomersPanel && 
+                    !customersPanel.classList.contains('hidden')) {
+                    customersPanel.classList.add('hidden');
+                }
+            });
+        }
+        
+        // Customer details expand functionality
+        document.querySelectorAll('.customer-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const customerItem = this.parentElement;
+                const details = customerItem.querySelector('.customer-details');
+                
+                // Toggle the visibility of the details
+                details.classList.toggle('hidden');
+                
+                // Rotate the icon if we had one (for visual indication)
+                // Since we don't have an icon, we'll just toggle the details
+            });
+        });
+        
+        // Products panel functionality
+        const productsBtn = document.getElementById('products-btn');
+        const productsPanel = document.getElementById('products-panel');
+        
+        if (productsBtn && productsPanel) {
+            productsBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                productsPanel.classList.toggle('hidden');
+                
+                // Close other panels when products panel opens
+                document.getElementById('notifications-panel').classList.add('hidden');
+                document.getElementById('appointments-panel').classList.add('hidden');
+                document.getElementById('customers-panel').classList.add('hidden');
+            });
+            
+            // Close products panel when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInsideProductsBtn = productsBtn.contains(event.target);
+                const isClickInsideProductsPanel = productsPanel.contains(event.target);
+                
+                if (!isClickInsideProductsBtn && !isClickInsideProductsPanel && 
+                    !productsPanel.classList.contains('hidden')) {
+                    productsPanel.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

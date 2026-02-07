@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding | The Whistle Stop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&family=Inter:wght @300;400;700&family=Playfair+Display:ital,wght @0,700;1,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs/lib/anime.iife.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs @3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        charcoal: '#1A1A1A',
+                        barberRed: '#C8102E',
+                        steamWhite: '#F5F5F5',
+                        leather: '#3E2723',
+                        brass: '#B8860B',
+                    },
+                    fontFamily: {
+                        gothic: ['Staatliches', 'sans-serif'],
+                        railway: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .newspaper-texture {
+            background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+        }
+        .barber-pole-bg {
+            background: repeating-linear-gradient(
+                45deg,
+                #C8102E,
+                #C8102E 20px,
+                #F5F5F5 20px,
+                #F5F5F5 40px,
+                #1A1A1A 40px,
+                #1A1A1A 60px
+            );
+            background-size: 200% 200%;
+            animation: barberPole 5s linear infinite;
+        }
+        @keyframes barberPole {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+        .steam-float {
+            animation: steam 4s ease-in-out infinite;
+        }
+        @keyframes steam {
+            0%, 100% { transform: translateY(0) opacity(0.5); }
+            50% { transform: translateY(-10px) opacity(0.8); }
+        }
+        .brass-glow:hover {
+            box-shadow: 0 0 15px rgba(184, 134, 11, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-charcoal text-steamWhite font-railway selection:bg-barberRed selection:text-white overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-charcoal/90 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <img src="assets/whistle-stop.png" alt="Whistle Stop Logo" class="h-12 w-auto">
+                <span class="font-gothic text-2xl tracking-widest hidden md:block">THE WHISTLE STOP</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 font-gothic text-lg tracking-wider">
+                <a href="index.html" class="hover:text-barberRed transition-colors">HOME</a>
+                <a href="portal.html" class="hover:text-barberRed transition-colors">CLIENT PORTAL</a>
+                <a href="admin.html" class="hover:text-barberRed transition-colors">STATION MASTER</a>
+            </div>
+            <div class="md:hidden">
+                <i data-feather="menu"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Onboarding Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-charcoal/40 via-charcoal/80 to-charcoal z-10"></div>
+            <img src="http://static.photos/workspace/1200x630/1" class="w-full h-full object-cover opacity-40 grayscale" alt="Barbershop Background">
+        </div>
+
+        <div class="relative z-20 text-center px-4 max-w-2xl mx-auto">
+            <div class="mb-8">
+                <h1 class="font-gothic text-5xl md:text-7xl leading-none mb-6 hero-reveal">
+                    WELCOME ABOARD
+                </h1>
+                <p class="font-gothic text-barberRed text-xl tracking-[0.3em] mb-6 hero-reveal">JOIN THE JOURNEY</p>
+            </div>
+            
+            <div class="bg-black/50 backdrop-blur-sm border border-white/10 rounded-sm p-8 mb-10 hero-reveal">
+                <h2 class="font-gothic text-3xl mb-6 text-barberRed text-center">SIGN UP</h2>
+                
+                <div class="space-y-6">
+                    <a href="portal.html" class="group flex items-center justify-center gap-3 bg-barberRed hover:bg-red-700 px-8 py-4 rounded-sm transition-all w-full">
+                        <i data-feather="chrome" class="w-5 h-5"></i>
+                        <span class="font-gothic text-xl tracking-wider">GET STARTED WITH GOOGLE</span>
+                    </a>
+                    <a href="portal.html" class="group flex items-center justify-center gap-3 bg-white text-charcoal hover:bg-steamWhite px-8 py-4 rounded-sm transition-all w-full">
+                        <i data-feather="command" class="w-5 h-5"></i>
+                        <span class="font-gothic text-xl tracking-wider">CONTINUE WITH APPLE</span>
+                    </a>
+                    
+                    <div class="relative flex items-center py-4">
+                        <div class="flex-grow border-t border-white/20"></div>
+                        <span class="flex-shrink mx-4 text-steamWhite/60 font-gothic">OR WITH EMAIL</span>
+                        <div class="flex-grow border-t border-white/20"></div>
+                    </div>
+                    
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block text-left font-gothic text-sm mb-2">EMAIL ADDRESS</label>
+                            <input type="email" class="w-full bg-charcoal border border-white/20 rounded-sm p-3 text-steamWhite focus:outline-none focus:border-barberRed" placeholder="Enter your email">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-left font-gothic text-sm mb-2">PASSWORD</label>
+                            <input type="password" class="w-full bg-charcoal border border-white/20 rounded-sm p-3 text-steamWhite focus:outline-none focus:border-barberRed" placeholder="Create a password">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-left font-gothic text-sm mb-2">REPEAT PASSWORD</label>
+                            <input type="password" class="w-full bg-charcoal border border-white/20 rounded-sm p-3 text-steamWhite focus:outline-none focus:border-barberRed" placeholder="Repeat your password">
+                        </div>
+                        
+                        <div class="pt-4">
+                            <button type="submit" class="w-full bg-barberRed hover:bg-red-700 px-8 py-4 rounded-sm brass-glow transition-all font-gothic text-xl">
+                                CREATE ACCOUNT
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Propositions -->
+    <section class="py-16 bg-steamWhite text-charcoal newspaper-texture">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="font-gothic text-4xl md:text-5xl text-center mb-16 border-b-4 border-charcoal inline-block mx-auto">WHY TRAVEL WITH US?</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Prop 1 -->
+                <div class="group p-6 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
+                    <div class="mb-4 h-32 overflow-hidden relative bg-charcoal flex items-center justify-center">
+                        <img src="http://static.photos/vintage/640x360/1" class="absolute inset-0 opacity-50 grayscale group-hover:scale-110 transition-transform duration-700" alt="Vintage Illustration">
+                        <div class="relative z-10 text-steamWhite text-center p-4">
+                            <i data-feather="clock" class="w-10 h-10 mx-auto mb-2 text-barberRed"></i>
+                            <h3 class="font-gothic text-xl">PUNCTUAL SERVICE</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed opacity-70">We honor the tradition of punctuality. Your time is valuable, and we respect it.</p>
+                </div>
+
+                <!-- Prop 2 -->
+                <div class="group p-6 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
+                    <div class="mb-4 h-32 overflow-hidden relative bg-leather flex items-center justify-center">
+                        <img src="http://static.photos/leather/640x360/2" class="absolute inset-0 opacity-50 grayscale group-hover:scale-110 transition-transform duration-700" alt="Leather Journal">
+                        <div class="relative z-10 text-steamWhite text-center p-4">
+                            <i data-feather="shield" class="w-10 h-10 mx-auto mb-2 text-brass"></i>
+                            <h3 class="font-gothic text-xl">TRADITIONAL CRAFT</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed opacity-70">Experience the artistry of traditional grooming techniques passed down through generations.</p>
+                </div>
+
+                <!-- Prop 3 -->
+                <div class="group p-6 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
+                    <div class="mb-4 h-32 overflow-hidden relative bg-charcoal flex items-center justify-center">
+                        <img src="http://static.photos/industry/640x360/3" class="absolute inset-0 opacity-50 grayscale group-hover:scale-110 transition-transform duration-700" alt="Steam Gauge">
+                        <div class="relative z-10 text-steamWhite text-center p-4">
+                            <i data-feather="star" class="w-10 h-10 mx-auto mb-2 text-barberRed"></i>
+                            <h3 class="font-gothic text-xl">PREMIUM COMFORT</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed opacity-70">Relax in our vintage-inspired chairs with premium amenities for your comfort.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal border-t border-white/10 py-12">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-4">
+                <img src="assets/whistle-stop.png" alt="Whistle Stop Logo" class="h-10 opacity-50 grayscale">
+                <p class="text-xs uppercase tracking-[0.4em] opacity-30">© 1929-2024 The Whistle Stop Barber's Suite</p>
+            </div>
+            <div class="flex gap-8 opacity-50 text-xs uppercase tracking-widest">
+                <a href="#" class="hover:text-barberRed transition-colors">Privacy</a>
+                <a href="#" class="hover:text-barberRed transition-colors">Terms</a>
+                <a href="#" class="hover:text-barberRed transition-colors">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+
+        // Hero Animations
+        anime({
+            targets: '.hero-reveal',
+            translateY: [30, 0],
+            opacity: [0, 1],
+            delay: anime.stagger(200),
+            duration: 1200,
+            easing: 'easeOutExpo'
+        });
+        
+        // Handle form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simple validation
+            const email = document.querySelector('input[type="email"]').value;
+            const password = document.querySelector('input[type="password"]:first-of-type').value;
+            const confirmPassword = document.querySelector('input[type="password"]:last-of-type').value;
+            
+            if (!email || !password || !confirmPassword) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            // If validation passes, redirect to portal with email parameter
+            window.location.href = 'portal.html?email=' + encodeURIComponent(email);
+        });
+    </script>
+</body>
+</html>
