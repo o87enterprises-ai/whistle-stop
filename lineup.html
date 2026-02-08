@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>The Whistle Stop | Service Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&family=Inter:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        charcoal: '#1A1A1A',
+                        barberRed: '#C8102E',
+                        steamWhite: '#F5F5F5',
+                        leather: '#3E2723',
+                        brass: '#B8860B',
+                    },
+                    fontFamily: {
+                        gothic: ['Staatliches', 'sans-serif'],
+                        railway: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .newspaper-texture {
+            background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+        }
+        .barber-pole-bg {
+            background: repeating-linear-gradient(
+                45deg,
+                #C8102E,
+                #C8102E 20px,
+                #F5F5F5 20px,
+                #F5F5F5 40px,
+                #1A1A1A 40px,
+                #1A1A1A 60px
+            );
+            background-size: 200% 200%;
+            animation: barberPole 5s linear infinite;
+        }
+        @keyframes barberPole {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+        .steam-float {
+            animation: steam 4s ease-in-out infinite;
+        }
+        @keyframes steam {
+            0%, 100% { transform: translateY(0) opacity(0.5); }
+            50% { transform: translateY(-10px) opacity(0.8); }
+        }
+        .brass-glow:hover {
+            box-shadow: 0 0 15px rgba(184, 134, 11, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-charcoal text-steamWhite font-railway selection:bg-barberRed selection:text-white overflow-x-hidden overscroll-contain">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-charcoal/90 backdrop-blur-md border-b border-white/10" role="navigation" aria-label="Main navigation">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="index.html" aria-label="Home">
+                    <img src="assets/whistle-stop.png" alt="Whistle Stop Logo" class="h-12 w-auto">
+                </a>
+                <span class="font-gothic text-2xl tracking-widest hidden md:block">THE WHISTLE STOP</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 font-gothic text-lg tracking-wider">
+                <a href="index.html" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed focus:rounded-sm" aria-label="Home">HOME</a>
+                <a href="lineup.html" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed focus:rounded-sm" aria-label="Service Menu">THE LINEUP</a>
+                <a href="portal.html" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed focus:rounded-sm" aria-label="Client Portal">CLIENT PORTAL</a>
+                <a href="admin.html" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed focus:rounded-sm" aria-label="Admin Dashboard">STATION MASTER</a>
+                <a href="lineup.html" class="bg-barberRed px-6 py-2 rounded-sm brass-glow transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-barberRed" aria-label="Book Appointment">BOOK SEAT</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="p-3 rounded-md text-steamWhite hover:text-barberRed focus:outline-none focus:ring-2 focus:ring-barberRed" aria-expanded="false" aria-controls="mobile-menu-panel" aria-label="Open navigation menu">
+                    <i data-feather="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="md:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300"></div>
+
+    <!-- Mobile Menu Slide-out Panel -->
+    <div id="mobile-menu-panel" class="md:hidden fixed top-0 right-0 h-full w-72 bg-charcoal border-l border-white/20 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
+        <div class="flex items-center justify-between p-6 border-b border-white/10">
+            <h2 id="mobile-menu-title" class="font-gothic text-xl tracking-widest text-steamWhite">MENU</h2>
+            <button id="mobile-menu-close" class="p-3 text-steamWhite hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed" aria-label="Close menu">
+                <i data-feather="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <div class="p-6 space-y-2">
+            <a href="index.html" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
+                <div class="flex items-center gap-4">
+                    <i data-feather="home" class="w-5 h-5"></i>
+                    <span>HOME</span>
+                </div>
+            </a>
+            <a href="lineup.html" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
+                <div class="flex items-center gap-4">
+                    <i data-feather="list" class="w-5 h-5"></i>
+                    <span>THE LINEUP</span>
+                </div>
+            </a>
+            <a href="portal.html" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
+                <div class="flex items-center gap-4">
+                    <i data-feather="user" class="w-5 h-5"></i>
+                    <span>CLIENT PORTAL</span>
+                </div>
+            </a>
+            <a href="admin.html" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
+                <div class="flex items-center gap-4">
+                    <i data-feather="settings" class="w-5 h-5"></i>
+                    <span>STATION MASTER</span>
+                </div>
+            </a>
+            <a href="lineup.html" class="w-full mt-6 bg-barberRed px-6 py-4 rounded-sm font-gothic text-lg tracking-wider text-steamWhite hover:bg-red-700 transition-colors brass-glow flex items-center justify-center gap-3 focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
+                <i data-feather="calendar" class="w-5 h-5"></i>
+                <span>BOOK SEAT</span>
+            </a>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10">
+            <div class="flex items-center gap-3">
+                <img src="assets/whistle-stop.png" alt="Logo" class="h-8 w-auto opacity-50">
+                <span class="text-xs text-steamWhite/40 tracking-wider">THE WHISTLE STOP</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h1 class="font-gothic text-4xl md:text-6xl mb-4">THE LINEUP</h1>
+                <p class="text-xl text-steamWhite/80">Premium grooming services crafted for the modern gentleman</p>
+            </div>
+
+            <!-- Services Menu Image -->
+            <section class="mb-16">
+                <div class="bg-steamWhite/5 p-6 rounded-sm border border-white/10">
+                    <h2 class="font-gothic text-2xl md:text-3xl mb-6 text-center text-barberRed">SERVICE MENU</h2>
+                    <div class="flex justify-center">
+                        <img src="assets/Copilot_20260207_121828.png" alt="Service Menu" class="max-w-full h-auto rounded-sm border-2 border-white/20 shadow-lg">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Booking Section -->
+            <section class="bg-steamWhite text-charcoal rounded-sm p-8 border-2 border-white/20">
+                <h2 class="font-gothic text-3xl mb-6 text-center">BOOK YOUR APPOINTMENT</h2>
+                <p class="text-center mb-8 text-lg">Select your service, date, and time. Payment required to secure your booking.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Date and Time Selection -->
+                    <div class="space-y-6">
+                        <div>
+                            <label for="service-select" class="block font-gothic text-xl mb-3">SELECT SERVICE</label>
+                            <select id="service-select" class="w-full p-4 border-2 border-charcoal rounded-sm font-railway text-lg bg-white">
+                                <option value="">Choose a service...</option>
+                                <option value="classic-cut">Classic Cut & Style - $35</option>
+                                <option value="premium-cut">Premium Cut & Hot Towel Shave - $55</option>
+                                <option value="beard-groom">Beard Groom & Shape - $40</option>
+                                <option value="kids-cut">Kids Cut (12 & under) - $25</option>
+                                <option value="deluxe">Deluxe Experience - $75</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="date-picker" class="block font-gothic text-xl mb-3">SELECT DATE</label>
+                            <input type="date" id="date-picker" class="w-full p-4 border-2 border-charcoal rounded-sm font-railway text-lg">
+                        </div>
+                        
+                        <div>
+                            <label for="time-picker" class="block font-gothic text-xl mb-3">SELECT TIME</label>
+                            <select id="time-picker" class="w-full p-4 border-2 border-charcoal rounded-sm font-railway text-lg bg-white">
+                                <option value="">Available times...</option>
+                                <option value="09:00">9:00 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="12:00">12:00 PM</option>
+                                <option value="13:00">1:00 PM</option>
+                                <option value="14:00">2:00 PM</option>
+                                <option value="15:00">3:00 PM</option>
+                                <option value="16:00">4:00 PM</option>
+                                <option value="17:00">5:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Section -->
+                    <div class="space-y-6">
+                        <div class="bg-charcoal text-steamWhite p-6 rounded-sm">
+                            <h3 class="font-gothic text-2xl mb-4 text-barberRed">PAYMENT DETAILS</h3>
+                            <p class="mb-4">Payment required to confirm appointment. No payment, no booking.</p>
+                            
+                            <form id="payment-form" class="space-y-4">
+                                <div>
+                                    <label for="card-number" class="block mb-2 font-railway">Card Number</label>
+                                    <input type="text" id="card-number" class="w-full p-3 border border-white/20 rounded-sm bg-steamWhite text-charcoal" placeholder="0000 0000 0000 0000">
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="expiry-date" class="block mb-2 font-railway">Expiry Date</label>
+                                        <input type="text" id="expiry-date" class="w-full p-3 border border-white/20 rounded-sm bg-steamWhite text-charcoal" placeholder="MM/YY">
+                                    </div>
+                                    <div>
+                                        <label for="cvv" class="block mb-2 font-railway">CVV</label>
+                                        <input type="text" id="cvv" class="w-full p-3 border border-white/20 rounded-sm bg-steamWhite text-charcoal" placeholder="123">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label for="card-name" class="block mb-2 font-railway">Name on Card</label>
+                                    <input type="text" id="card-name" class="w-full p-3 border border-white/20 rounded-sm bg-steamWhite text-charcoal" placeholder="John Doe">
+                                </div>
+                                
+                                <div class="pt-4">
+                                    <button type="submit" class="w-full bg-barberRed hover:bg-red-700 text-steamWhite font-gothic text-xl py-4 transition-colors brass-glow">
+                                        CONFIRM BOOKING & PAY
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal border-t border-white/10 py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8">
+            <div class="flex flex-col items-center md:items-start gap-4">
+                <img src="assets/whistle-stop.png" alt="Whistle Stop Logo" class="h-8 md:h-10 opacity-50 grayscale">
+                <p class="text-xs uppercase tracking-[0.3em] md:tracking-[0.4em] opacity-30 text-center md:text-left">© 1929-2024 The Whistle Stop Barber's Suite</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 opacity-50 text-xs uppercase tracking-widest">
+                <a href="#" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm px-1 py-1">Privacy</a>
+                <a href="#" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm px-1 py-1">Terms</a>
+                <a href="#" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm px-1 py-1">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize everything after DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date-picker').min = today;
+
+            // Mobile menu functionality
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+            function openMobileMenu() {
+                mobileMenuPanel.classList.remove('translate-x-full');
+                mobileMenuOverlay.classList.remove('hidden');
+                setTimeout(() => {
+                    mobileMenuOverlay.classList.remove('opacity-0');
+                    mobileMenuOverlay.classList.add('opacity-100');
+                }, 10);
+                document.body.classList.add('overflow-hidden');
+
+                // Update ARIA attributes
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+            }
+
+            function closeMobileMenu() {
+                mobileMenuPanel.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.remove('opacity-100');
+                mobileMenuOverlay.classList.add('opacity-0');
+                setTimeout(() => {
+                    mobileMenuOverlay.classList.add('hidden');
+                }, 300);
+                document.body.classList.remove('overflow-hidden');
+
+                // Update ARIA attributes
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            }
+
+            // Initialize mobile menu state
+            if (mobileMenuButton && mobileMenuPanel) {
+                // Ensure initial state is closed
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+
+                mobileMenuButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+
+                    if (isExpanded) {
+                        closeMobileMenu();
+                    } else {
+                        openMobileMenu();
+                    }
+                });
+
+                if (mobileMenuClose) {
+                    mobileMenuClose.addEventListener('click', closeMobileMenu);
+                }
+
+                if (mobileMenuOverlay) {
+                    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+                }
+
+                // Close menu when clicking a link
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', closeMobileMenu);
+                });
+            }
+
+            // Handle form submission
+            const paymentForm = document.getElementById('payment-form');
+            if (paymentForm) {
+                paymentForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get selected values
+                    const service = document.getElementById('service-select').value;
+                    const date = document.getElementById('date-picker').value;
+                    const time = document.getElementById('time-picker').value;
+                    
+                    // Basic validation
+                    if (!service) {
+                        alert('Please select a service');
+                        return;
+                    }
+                    
+                    if (!date) {
+                        alert('Please select a date');
+                        return;
+                    }
+                    
+                    if (!time) {
+                        alert('Please select a time');
+                        return;
+                    }
+                    
+                    // In a real application, you would process the payment here
+                    // For now, we'll just show a success message
+                    alert(`Booking confirmed!\n\nService: ${document.getElementById('service-select').options[document.getElementById('service-select').selectedIndex].text}\nDate: ${date}\nTime: ${time}\n\nThank you for your payment!`);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -2,15 +2,15 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Onboarding | The Whistle Stop</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Staatliches&family=Inter:wght @300;400;700&family=Playfair+Display:ital,wght @0,700;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&family=Inter:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/animejs/lib/anime.iife.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs @3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -64,78 +64,133 @@
         }
     </style>
 </head>
-<body class="bg-charcoal text-steamWhite font-railway selection:bg-barberRed selection:text-white overflow-x-hidden">
+<body class="bg-charcoal text-steamWhite font-railway selection:bg-barberRed selection:text-white overflow-x-hidden overscroll-contain">
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-charcoal/90 backdrop-blur-md border-b border-white/10">
+    <nav class="fixed top-0 w-full z-50 bg-charcoal/90 backdrop-blur-md border-b border-white/10" role="navigation" aria-label="Main navigation">
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <img src="assets/whistle-stop.png" alt="Whistle Stop Logo" class="h-12 w-auto">
+                <a href="index.html" aria-label="Home">
+                    <img src="assets/whistle-stop.png" alt="Whistle Stop Logo" class="h-12 w-auto">
+                </a>
                 <span class="font-gothic text-2xl tracking-widest hidden md:block">THE WHISTLE STOP</span>
             </div>
             <div class="hidden md:flex items-center gap-8 font-gothic text-lg tracking-wider">
-                <a href="index.html" class="hover:text-barberRed transition-colors">HOME</a>
-                <a href="portal.html" class="hover:text-barberRed transition-colors">CLIENT PORTAL</a>
-                <a href="admin.html" class="hover:text-barberRed transition-colors">STATION MASTER</a>
+                <a href="index.html" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm" aria-label="Home">HOME</a>
+                <a href="lineup.html" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm" aria-label="Service Menu">THE LINEUP</a>
+                <a href="portal.html" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm" aria-label="Client Portal">CLIENT PORTAL</a>
+                <a href="admin.html" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm" aria-label="Admin Dashboard">STATION MASTER</a>
+                <a href="lineup.html" class="bg-barberRed px-6 py-2 rounded-sm brass-glow transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-barberRed" aria-label="Book Appointment">BOOK SEAT</a>
             </div>
             <div class="md:hidden">
-                <i data-feather="menu"></i>
+                <button id="mobile-menu-button" class="p-3 rounded-md text-steamWhite hover:text-barberRed focus:outline-none focus:ring-2 focus:ring-barberRed" aria-expanded="false" aria-controls="mobile-menu-panel" aria-label="Open navigation menu">
+                    <i data-feather="menu" class="w-6 h-6"></i>
+                </button>
             </div>
         </div>
     </nav>
 
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="md:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300"></div>
+
+    <!-- Mobile Menu Slide-out Panel -->
+    <div id="mobile-menu-panel" class="md:hidden fixed top-0 right-0 h-full w-72 bg-charcoal border-l border-white/20 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
+        <div class="flex items-center justify-between p-6 border-b border-white/10">
+            <h2 id="mobile-menu-title" class="font-gothic text-xl tracking-widest text-steamWhite">MENU</h2>
+            <button id="mobile-menu-close" class="p-3 text-steamWhite hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed" aria-label="Close menu">
+                <i data-feather="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <div class="p-6 space-y-2">
+            <a href="index.html" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
+                <div class="flex items-center gap-4">
+                    <i data-feather="home" class="w-5 h-5"></i>
+                    <span>HOME</span>
+                </div>
+            </a>
+            <a href="lineup.html" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
+                <div class="flex items-center gap-4">
+                    <i data-feather="list" class="w-5 h-5"></i>
+                    <span>THE LINEUP</span>
+                </div>
+            </a>
+            <a href="portal.html" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
+                <div class="flex items-center gap-4">
+                    <i data-feather="user" class="w-5 h-5"></i>
+                    <span>CLIENT PORTAL</span>
+                </div>
+            </a>
+            <a href="admin.html" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
+                <div class="flex items-center gap-4">
+                    <i data-feather="settings" class="w-5 h-5"></i>
+                    <span>STATION MASTER</span>
+                </div>
+            </a>
+            <a href="lineup.html" class="w-full mt-6 bg-barberRed px-6 py-4 rounded-sm font-gothic text-lg tracking-wider text-steamWhite hover:bg-red-700 transition-colors brass-glow flex items-center justify-center gap-3 focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
+                <i data-feather="calendar" class="w-5 h-5"></i>
+                <span>BOOK SEAT</span>
+            </a>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10">
+            <div class="flex items-center gap-3">
+                <img src="assets/whistle-stop.png" alt="Logo" class="h-8 w-auto opacity-50">
+                <span class="text-xs text-steamWhite/40 tracking-wider">THE WHISTLE STOP</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Onboarding Section -->
-    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden snap-start">
         <div class="absolute inset-0 z-0">
             <div class="absolute inset-0 bg-gradient-to-b from-charcoal/40 via-charcoal/80 to-charcoal z-10"></div>
             <img src="http://static.photos/workspace/1200x630/1" class="w-full h-full object-cover opacity-40 grayscale" alt="Barbershop Background">
         </div>
 
-        <div class="relative z-20 text-center px-4 max-w-2xl mx-auto">
-            <div class="mb-8">
-                <h1 class="font-gothic text-5xl md:text-7xl leading-none mb-6 hero-reveal">
-                    WELCOME ABOARD
+        <div class="relative z-20 text-center px-4 max-w-sm md:max-w-2xl mx-auto w-full">
+            <div class="mb-6 md:mb-8">
+                <h1 class="font-gothic text-4xl md:text-5xl lg:text-7xl leading-none mb-4 md:mb-6 hero-reveal">
+                    ALL ABOARD!
                 </h1>
-                <p class="font-gothic text-barberRed text-xl tracking-[0.3em] mb-6 hero-reveal">JOIN THE JOURNEY</p>
+                <p class="font-gothic text-barberRed text-lg md:text-xl tracking-[0.2em] md:tracking-[0.3em] mb-4 md:mb-6 hero-reveal">JOIN THE JOURNEY</p>
             </div>
-            
-            <div class="bg-black/50 backdrop-blur-sm border border-white/10 rounded-sm p-8 mb-10 hero-reveal">
-                <h2 class="font-gothic text-3xl mb-6 text-barberRed text-center">SIGN UP</h2>
-                
-                <div class="space-y-6">
-                    <a href="portal.html" class="group flex items-center justify-center gap-3 bg-barberRed hover:bg-red-700 px-8 py-4 rounded-sm transition-all w-full">
+
+            <div class="bg-black/50 backdrop-blur-sm border border-white/10 rounded-sm p-6 md:p-8 mb-8 md:mb-10 hero-reveal">
+                <h2 class="font-gothic text-2xl md:text-3xl mb-4 md:mb-6 text-barberRed text-center">SIGN UP</h2>
+
+                <div class="space-y-4 md:space-y-6">
+                    <a href="portal.html" class="group flex items-center justify-center gap-3 bg-barberRed hover:bg-red-700 px-6 md:px-8 py-3 md:py-4 rounded-sm transition-all w-full min-h-[52px]">
                         <i data-feather="chrome" class="w-5 h-5"></i>
-                        <span class="font-gothic text-xl tracking-wider">GET STARTED WITH GOOGLE</span>
+                        <span class="font-gothic text-base md:text-xl tracking-wider">GET STARTED WITH GOOGLE</span>
                     </a>
-                    <a href="portal.html" class="group flex items-center justify-center gap-3 bg-white text-charcoal hover:bg-steamWhite px-8 py-4 rounded-sm transition-all w-full">
+                    <a href="portal.html" class="group flex items-center justify-center gap-3 bg-white text-charcoal hover:bg-steamWhite px-6 md:px-8 py-3 md:py-4 rounded-sm transition-all w-full min-h-[52px]">
                         <i data-feather="command" class="w-5 h-5"></i>
-                        <span class="font-gothic text-xl tracking-wider">CONTINUE WITH APPLE</span>
+                        <span class="font-gothic text-base md:text-xl tracking-wider">CONTINUE WITH APPLE</span>
                     </a>
-                    
-                    <div class="relative flex items-center py-4">
+
+                    <div class="relative flex items-center py-3 md:py-4">
                         <div class="flex-grow border-t border-white/20"></div>
-                        <span class="flex-shrink mx-4 text-steamWhite/60 font-gothic">OR WITH EMAIL</span>
+                        <span class="flex-shrink mx-3 md:mx-4 text-steamWhite/60 font-gothic text-sm md:text-base">OR WITH EMAIL</span>
                         <div class="flex-grow border-t border-white/20"></div>
                     </div>
-                    
+
                     <form class="space-y-4">
                         <div>
                             <label class="block text-left font-gothic text-sm mb-2">EMAIL ADDRESS</label>
-                            <input type="email" class="w-full bg-charcoal border border-white/20 rounded-sm p-3 text-steamWhite focus:outline-none focus:border-barberRed" placeholder="Enter your email">
+                            <input type="email" class="w-full bg-charcoal border border-white/20 rounded-sm p-3 text-steamWhite focus:outline-none focus:border-barberRed text-sm md:text-base" placeholder="Enter your email">
                         </div>
-                        
+
                         <div>
                             <label class="block text-left font-gothic text-sm mb-2">PASSWORD</label>
-                            <input type="password" class="w-full bg-charcoal border border-white/20 rounded-sm p-3 text-steamWhite focus:outline-none focus:border-barberRed" placeholder="Create a password">
+                            <input type="password" class="w-full bg-charcoal border border-white/20 rounded-sm p-3 text-steamWhite focus:outline-none focus:border-barberRed text-sm md:text-base" placeholder="Create a password">
                         </div>
-                        
+
                         <div>
                             <label class="block text-left font-gothic text-sm mb-2">REPEAT PASSWORD</label>
-                            <input type="password" class="w-full bg-charcoal border border-white/20 rounded-sm p-3 text-steamWhite focus:outline-none focus:border-barberRed" placeholder="Repeat your password">
+                            <input type="password" class="w-full bg-charcoal border border-white/20 rounded-sm p-3 text-steamWhite focus:outline-none focus:border-barberRed text-sm md:text-base" placeholder="Repeat your password">
                         </div>
-                        
-                        <div class="pt-4">
-                            <button type="submit" class="w-full bg-barberRed hover:bg-red-700 px-8 py-4 rounded-sm brass-glow transition-all font-gothic text-xl">
+
+                        <div class="pt-3 md:pt-4">
+                            <button type="submit" class="w-full bg-barberRed hover:bg-red-700 px-6 md:px-8 py-3 md:py-4 rounded-sm brass-glow transition-all font-gothic text-base md:text-xl min-h-[52px]">
                                 CREATE ACCOUNT
                             </button>
                         </div>
@@ -146,61 +201,61 @@
     </section>
 
     <!-- Value Propositions -->
-    <section class="py-16 bg-steamWhite text-charcoal newspaper-texture">
+    <section class="py-12 md:py-16 bg-steamWhite text-charcoal newspaper-texture snap-start">
         <div class="max-w-7xl mx-auto px-4">
-            <h2 class="font-gothic text-4xl md:text-5xl text-center mb-16 border-b-4 border-charcoal inline-block mx-auto">WHY TRAVEL WITH US?</h2>
-            
-            <div class="grid md:grid-cols-3 gap-8">
+            <h2 class="font-gothic text-3xl md:text-4xl lg:text-5xl text-center mb-12 md:mb-16 border-b-4 border-charcoal inline-block mx-auto px-4">WHY TRAVEL WITH US?</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                 <!-- Prop 1 -->
-                <div class="group p-6 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
-                    <div class="mb-4 h-32 overflow-hidden relative bg-charcoal flex items-center justify-center">
+                <div class="group p-4 md:p-6 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
+                    <div class="mb-3 md:mb-4 h-24 md:h-32 overflow-hidden relative bg-charcoal flex items-center justify-center">
                         <img src="http://static.photos/vintage/640x360/1" class="absolute inset-0 opacity-50 grayscale group-hover:scale-110 transition-transform duration-700" alt="Vintage Illustration">
-                        <div class="relative z-10 text-steamWhite text-center p-4">
-                            <i data-feather="clock" class="w-10 h-10 mx-auto mb-2 text-barberRed"></i>
-                            <h3 class="font-gothic text-xl">PUNCTUAL SERVICE</h3>
+                        <div class="relative z-10 text-steamWhite text-center p-3 md:p-4">
+                            <i data-feather="clock" class="w-8 md:w-10 h-8 md:h-10 mx-auto mb-2 text-barberRed"></i>
+                            <h3 class="font-gothic text-lg md:text-xl">PUNCTUAL SERVICE</h3>
                         </div>
                     </div>
-                    <p class="text-sm leading-relaxed opacity-70">We honor the tradition of punctuality. Your time is valuable, and we respect it.</p>
+                    <p class="text-xs md:text-sm leading-relaxed opacity-70">We honor the tradition of punctuality. Your time is valuable, and we respect it.</p>
                 </div>
 
                 <!-- Prop 2 -->
-                <div class="group p-6 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
-                    <div class="mb-4 h-32 overflow-hidden relative bg-leather flex items-center justify-center">
+                <div class="group p-4 md:p-6 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
+                    <div class="mb-3 md:mb-4 h-24 md:h-32 overflow-hidden relative bg-leather flex items-center justify-center">
                         <img src="http://static.photos/leather/640x360/2" class="absolute inset-0 opacity-50 grayscale group-hover:scale-110 transition-transform duration-700" alt="Leather Journal">
-                        <div class="relative z-10 text-steamWhite text-center p-4">
-                            <i data-feather="shield" class="w-10 h-10 mx-auto mb-2 text-brass"></i>
-                            <h3 class="font-gothic text-xl">TRADITIONAL CRAFT</h3>
+                        <div class="relative z-10 text-steamWhite text-center p-3 md:p-4">
+                            <i data-feather="shield" class="w-8 md:w-10 h-8 md:h-10 mx-auto mb-2 text-brass"></i>
+                            <h3 class="font-gothic text-lg md:text-xl">TRADITIONAL CRAFT</h3>
                         </div>
                     </div>
-                    <p class="text-sm leading-relaxed opacity-70">Experience the artistry of traditional grooming techniques passed down through generations.</p>
+                    <p class="text-xs md:text-sm leading-relaxed opacity-70">Experience the artistry of traditional grooming techniques passed down through generations.</p>
                 </div>
 
                 <!-- Prop 3 -->
-                <div class="group p-6 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
-                    <div class="mb-4 h-32 overflow-hidden relative bg-charcoal flex items-center justify-center">
+                <div class="group p-4 md:p-6 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
+                    <div class="mb-3 md:mb-4 h-24 md:h-32 overflow-hidden relative bg-charcoal flex items-center justify-center">
                         <img src="http://static.photos/industry/640x360/3" class="absolute inset-0 opacity-50 grayscale group-hover:scale-110 transition-transform duration-700" alt="Steam Gauge">
-                        <div class="relative z-10 text-steamWhite text-center p-4">
-                            <i data-feather="star" class="w-10 h-10 mx-auto mb-2 text-barberRed"></i>
-                            <h3 class="font-gothic text-xl">PREMIUM COMFORT</h3>
+                        <div class="relative z-10 text-steamWhite text-center p-3 md:p-4">
+                            <i data-feather="star" class="w-8 md:w-10 h-8 md:h-10 mx-auto mb-2 text-barberRed"></i>
+                            <h3 class="font-gothic text-lg md:text-xl">PREMIUM COMFORT</h3>
                         </div>
                     </div>
-                    <p class="text-sm leading-relaxed opacity-70">Relax in our vintage-inspired chairs with premium amenities for your comfort.</p>
+                    <p class="text-xs md:text-sm leading-relaxed opacity-70">Relax in our vintage-inspired chairs with premium amenities for your comfort.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-charcoal border-t border-white/10 py-12">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="flex items-center gap-4">
-                <img src="assets/whistle-stop.png" alt="Whistle Stop Logo" class="h-10 opacity-50 grayscale">
-                <p class="text-xs uppercase tracking-[0.4em] opacity-30">© 1929-2024 The Whistle Stop Barber's Suite</p>
+    <footer class="bg-charcoal border-t border-white/10 py-8 md:py-12 snap-start">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8">
+            <div class="flex flex-col items-center md:items-start gap-4">
+                <img src="assets/whistle-stop.png" alt="Whistle Stop Logo" class="h-8 md:h-10 opacity-50 grayscale">
+                <p class="text-xs uppercase tracking-[0.3em] md:tracking-[0.4em] opacity-30 text-center md:text-left">© 1929-2024 The Whistle Stop Barber's Suite</p>
             </div>
-            <div class="flex gap-8 opacity-50 text-xs uppercase tracking-widest">
-                <a href="#" class="hover:text-barberRed transition-colors">Privacy</a>
-                <a href="#" class="hover:text-barberRed transition-colors">Terms</a>
-                <a href="#" class="hover:text-barberRed transition-colors">Support</a>
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 opacity-50 text-xs uppercase tracking-widest">
+                <a href="#" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm px-1 py-1">Privacy</a>
+                <a href="#" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm px-1 py-1">Terms</a>
+                <a href="#" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm px-1 py-1">Support</a>
             </div>
         </div>
     </footer>
@@ -217,29 +272,95 @@
             duration: 1200,
             easing: 'easeOutExpo'
         });
-        
+
         // Handle form submission
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             // Simple validation
             const email = document.querySelector('input[type="email"]').value;
             const password = document.querySelector('input[type="password"]:first-of-type').value;
             const confirmPassword = document.querySelector('input[type="password"]:last-of-type').value;
-            
+
             if (!email || !password || !confirmPassword) {
                 alert('Please fill in all fields');
                 return;
             }
-            
+
             if (password !== confirmPassword) {
                 alert('Passwords do not match');
                 return;
             }
-            
+
             // If validation passes, redirect to portal with email parameter
             window.location.href = 'portal.html?email=' + encodeURIComponent(email);
         });
+
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+        function openMobileMenu() {
+            mobileMenuPanel.classList.remove('translate-x-full');
+            mobileMenuOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                mobileMenuOverlay.classList.remove('opacity-0');
+                mobileMenuOverlay.classList.add('opacity-100');
+            }, 10);
+            document.body.classList.add('overflow-hidden');
+
+            // Update ARIA attributes
+            mobileMenuButton.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeMobileMenu() {
+            mobileMenuPanel.classList.add('translate-x-full');
+            mobileMenuOverlay.classList.remove('opacity-100');
+            mobileMenuOverlay.classList.add('opacity-0');
+            setTimeout(() => {
+                mobileMenuOverlay.classList.add('hidden');
+            }, 300);
+            document.body.classList.remove('overflow-hidden');
+
+            // Update ARIA attributes
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+        }
+
+        // Initialize mobile menu state
+        if (mobileMenuButton && mobileMenuPanel) {
+            // Ensure initial state is closed
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+
+            mobileMenuButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+
+                if (isExpanded) {
+                    closeMobileMenu();
+                } else {
+                    openMobileMenu();
+                }
+            });
+
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener('click', closeMobileMenu);
+            }
+
+            if (mobileMenuOverlay) {
+                mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+            }
+
+            // Close menu when clicking a link
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+        }
+
+        // Add touch-friendly enhancements
+        document.addEventListener('touchstart', function() {}, true);
     </script>
 </body>
 </html>

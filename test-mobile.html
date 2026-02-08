@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Mobile Optimization Test | The Whistle Stop</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        charcoal: '#1A1A1A',
+                        barberRed: '#C8102E',
+                        steamWhite: '#F5F5F5',
+                        leather: '#3E2723',
+                        brass: '#B8860B',
+                    },
+                    fontFamily: {
+                        gothic: ['Staatliches', 'sans-serif'],
+                        railway: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-charcoal text-steamWhite font-railway overscroll-contain">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="font-gothic text-3xl md:text-5xl text-center mb-8 text-barberRed">Mobile Optimization Test</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-steamWhite/10 p-6 rounded-sm border border-white/10">
+                <h2 class="font-gothic text-xl mb-4 text-barberRed">Accessibility Features</h2>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-start gap-2">
+                        <i data-feather="check-circle" class="text-green-500 mt-1 flex-shrink-0"></i>
+                        <span>Focus indicators added to all interactive elements</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-feather="check-circle" class="text-green-500 mt-1 flex-shrink-0"></i>
+                        <span>ARIA labels for improved screen reader support</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-feather="check-circle" class="text-green-500 mt-1 flex-shrink-0"></i>
+                        <span>Sufficient color contrast maintained</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-feather="check-circle" class="text-green-500 mt-1 flex-shrink-0"></i>
+                        <span>Keyboard navigation support</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-steamWhite/10 p-6 rounded-sm border border-white/10">
+                <h2 class="font-gothic text-xl mb-4 text-barberRed">Responsive Features</h2>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-start gap-2">
+                        <i data-feather="check-circle" class="text-green-500 mt-1 flex-shrink-0"></i>
+                        <span>Flexible grid layouts for all screen sizes</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-feather="check-circle" class="text-green-500 mt-1 flex-shrink-0"></i>
+                        <span>Touch-friendly button sizes (minimum 44px)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-feather="check-circle" class="text-green-500 mt-1 flex-shrink-0"></i>
+                        <span>Optimized typography scaling</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-feather="check-circle" class="text-green-500 mt-1 flex-shrink-0"></i>
+                        <span>Mobile-first approach implemented</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="bg-steamWhite/10 p-6 rounded-sm border border-white/10 mb-8">
+            <h2 class="font-gothic text-xl mb-4 text-barberRed">Touch Targets Test</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <button class="bg-barberRed py-3 px-4 rounded-sm font-gothic text-sm min-h-[44px]">Button 1</button>
+                <button class="bg-brass py-3 px-4 rounded-sm font-gothic text-sm min-h-[44px] text-charcoal">Button 2</button>
+                <button class="bg-white/20 py-3 px-4 rounded-sm font-gothic text-sm min-h-[44px]">Button 3</button>
+                <button class="bg-steamWhite py-3 px-4 rounded-sm font-gothic text-sm min-h-[44px] text-charcoal">Button 4</button>
+            </div>
+        </div>
+        
+        <div class="bg-steamWhite/10 p-6 rounded-sm border border-white/10">
+            <h2 class="font-gothic text-xl mb-4 text-barberRed">Navigation Test</h2>
+            <nav class="flex flex-wrap gap-4 mb-6">
+                <a href="index.html" class="bg-barberRed px-4 py-2 rounded-sm font-gothic text-sm min-h-[44px] inline-flex items-center justify-center">Home</a>
+                <a href="portal.html" class="bg-white/20 px-4 py-2 rounded-sm font-gothic text-sm min-h-[44px] inline-flex items-center justify-center">Portal</a>
+                <a href="admin.html" class="bg-white/20 px-4 py-2 rounded-sm font-gothic text-sm min-h-[44px] inline-flex items-center justify-center">Admin</a>
+                <a href="onboarding.html" class="bg-white/20 px-4 py-2 rounded-sm font-gothic text-sm min-h-[44px] inline-flex items-center justify-center">Sign Up</a>
+            </nav>
+            
+            <div class="prose prose-invert max-w-none">
+                <h3 class="font-gothic text-lg text-barberRed">How to Test:</h3>
+                <ol class="text-sm space-y-2">
+                    <li>1. Open this page on a mobile device or use browser developer tools to simulate mobile view</li>
+                    <li>2. Check that all elements resize appropriately for different screen sizes</li>
+                    <li>3. Verify that buttons and links are large enough to tap easily (minimum 44px touch target)</li>
+                    <li>4. Test navigation and interactive elements with keyboard and screen readers</li>
+                    <li>5. Confirm that the layout remains usable in both portrait and landscape orientations</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+        });
+    </script>
+</body>
+</html>

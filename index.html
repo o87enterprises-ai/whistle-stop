@@ -2,15 +2,62 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>The Whistle Stop | Analog Soul. Digital Precision.</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Staatliches&family=Inter:wght @300;400;700&family=Playfair+Display:ital,wght @0,700;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&family=Inter:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/animejs/lib/anime.iife.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs @3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        // Fallback for mobile menu if main script fails
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            
+            if(mobileMenuButton && mobileMenuPanel && mobileMenuOverlay && mobileMenuClose) {
+                // Ensure initial closed state
+                mobileMenuPanel.classList.add('translate-x-full');
+                
+                mobileMenuButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    mobileMenuPanel.classList.toggle('translate-x-full');
+                    mobileMenuOverlay.classList.toggle('hidden');
+                    mobileMenuOverlay.classList.toggle('opacity-0');
+                    mobileMenuOverlay.classList.toggle('opacity-100');
+                    
+                    // Toggle body scroll
+                    document.body.classList.toggle('overflow-hidden');
+                    
+                    // Update ARIA
+                    const isExpanded = !mobileMenuPanel.classList.contains('translate-x-full');
+                    mobileMenuButton.setAttribute('aria-expanded', isExpanded.toString());
+                });
+                
+                mobileMenuClose.addEventListener('click', function() {
+                    mobileMenuPanel.classList.add('translate-x-full');
+                    mobileMenuOverlay.classList.add('hidden');
+                    mobileMenuOverlay.classList.remove('opacity-100');
+                    mobileMenuOverlay.classList.add('opacity-0');
+                    document.body.classList.remove('overflow-hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                });
+                
+                mobileMenuOverlay.addEventListener('click', function() {
+                    mobileMenuPanel.classList.add('translate-x-full');
+                    mobileMenuOverlay.classList.add('hidden');
+                    mobileMenuOverlay.classList.remove('opacity-100');
+                    mobileMenuOverlay.classList.add('opacity-0');
+                    document.body.classList.remove('overflow-hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
+    </script>
     <script>
         tailwind.config = {
             theme: {
@@ -64,64 +111,66 @@
         }
     </style>
 </head>
-<body class="bg-charcoal text-steamWhite font-railway selection:bg-barberRed selection:text-white overflow-x-hidden">
+<body class="bg-charcoal text-steamWhite font-railway selection:bg-barberRed selection:text-white overflow-x-hidden overscroll-contain">
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-charcoal/90 backdrop-blur-md border-b border-white/10">
+    <nav class="fixed top-0 w-full z-50 bg-charcoal/90 backdrop-blur-md border-b border-white/10" role="navigation" aria-label="Main navigation">
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <img src="assets/whistle-stop.png" alt="Whistle Stop Logo" class="h-12 w-auto">
+                <a href="index.html" aria-label="Home">
+                    <img src="assets/whistle-stop.png" alt="Whistle Stop Logo" class="h-12 w-auto">
+                </a>
                 <span class="font-gothic text-2xl tracking-widest hidden md:block">THE WHISTLE STOP</span>
             </div>
             <div class="hidden md:flex items-center gap-8 font-gothic text-lg tracking-wider">
-                <a href="#features" class="hover:text-barberRed transition-colors">THE LINEUP</a>
-                <a href="portal.html" class="hover:text-barberRed transition-colors">CLIENT PORTAL</a>
-                <a href="admin.html" class="hover:text-barberRed transition-colors">STATION MASTER</a>
-                <button class="bg-barberRed px-6 py-2 rounded-sm brass-glow transition-all active:scale-95">BOOK SEAT</button>
+                <a href="lineup.html" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed focus:rounded-sm" aria-label="Service Menu">THE LINEUP</a>
+                <a href="portal.html" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed focus:rounded-sm" aria-label="Client Portal">CLIENT PORTAL</a>
+                <a href="admin.html" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed focus:rounded-sm" aria-label="Admin Dashboard">STATION MASTER</a>
+                <a href="lineup.html" class="bg-barberRed px-6 py-2 rounded-sm brass-glow transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-barberRed" aria-label="Book Appointment">BOOK SEAT</a>
             </div>
             <div class="md:hidden">
-                <button id="mobile-menu-button" class="p-2 rounded-md text-steamWhite hover:text-barberRed focus:outline-none">
+                <button id="mobile-menu-button" class="p-3 rounded-md text-steamWhite hover:text-barberRed focus:outline-none focus:ring-2 focus:ring-barberRed" aria-expanded="false" aria-controls="mobile-menu-panel" aria-label="Open navigation menu">
                     <i data-feather="menu" class="w-6 h-6"></i>
                 </button>
             </div>
         </div>
-        
+
     </nav>
 
     <!-- Mobile Menu Overlay -->
     <div id="mobile-menu-overlay" class="md:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300"></div>
 
     <!-- Mobile Menu Slide-out Panel -->
-    <div id="mobile-menu-panel" class="md:hidden fixed top-0 right-0 h-full w-72 bg-charcoal border-l border-white/20 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-out">
+    <div id="mobile-menu-panel" class="md:hidden fixed top-0 right-0 h-full w-72 bg-charcoal border-l border-white/20 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
         <div class="flex items-center justify-between p-6 border-b border-white/10">
-            <span class="font-gothic text-xl tracking-widest text-steamWhite">MENU</span>
-            <button id="mobile-menu-close" class="p-2 text-steamWhite hover:text-barberRed transition-colors">
+            <h2 id="mobile-menu-title" class="font-gothic text-xl tracking-widest text-steamWhite">MENU</h2>
+            <button id="mobile-menu-close" class="p-3 text-steamWhite hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed" aria-label="Close menu">
                 <i data-feather="x" class="w-6 h-6"></i>
             </button>
         </div>
         <div class="p-6 space-y-2">
-            <a href="#features" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors">
+            <a href="lineup.html" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
                 <div class="flex items-center gap-4">
                     <i data-feather="list" class="w-5 h-5"></i>
                     <span>THE LINEUP</span>
                 </div>
             </a>
-            <a href="portal.html" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors">
+            <a href="portal.html" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
                 <div class="flex items-center gap-4">
                     <i data-feather="user" class="w-5 h-5"></i>
                     <span>CLIENT PORTAL</span>
                 </div>
             </a>
-            <a href="admin.html" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors">
+            <a href="admin.html" class="mobile-menu-link block px-4 py-4 font-gothic text-lg tracking-wider text-steamWhite hover:bg-white/10 hover:text-barberRed border-b border-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
                 <div class="flex items-center gap-4">
                     <i data-feather="settings" class="w-5 h-5"></i>
                     <span>STATION MASTER</span>
                 </div>
             </a>
-            <button class="w-full mt-6 bg-barberRed px-6 py-4 rounded-sm font-gothic text-lg tracking-wider text-steamWhite hover:bg-red-700 transition-colors brass-glow flex items-center justify-center gap-3">
+            <a href="lineup.html" class="w-full mt-6 bg-barberRed px-6 py-4 rounded-sm font-gothic text-lg tracking-wider text-steamWhite hover:bg-red-700 transition-colors brass-glow flex items-center justify-center gap-3 focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">
                 <i data-feather="calendar" class="w-5 h-5"></i>
                 <span>BOOK SEAT</span>
-            </button>
+            </a>
         </div>
         <div class="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10">
             <div class="flex items-center gap-3">
@@ -132,7 +181,7 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden snap-start" id="hero">
         <div class="absolute inset-0 z-0">
             <div class="absolute inset-0 bg-gradient-to-b from-charcoal/40 via-charcoal/80 to-charcoal z-10"></div>
             <img src="http://static.photos/workspace/1200x630/1" class="w-full h-full object-cover opacity-40 grayscale" alt="Barbershop Background">
@@ -146,16 +195,13 @@
             <p class="text-xl md:text-2xl font-serif italic text-steamWhite/80 mb-2 hero-reveal">
                 Where analog care meets digital service
             </p>
-            <p class="text-lg md:text-xl font-railway text-steamWhite/90 mb-8 hero-reveal">
-                Built for the barbers and their customers who believe in their craft
-            </p>
 
             <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-16 hero-reveal">
-                <a href="onboarding.html" class="group flex items-center gap-3 bg-barberRed hover:bg-red-700 px-8 py-4 rounded-sm transition-all w-full md:w-auto block">
+                <a href="onboarding.html" class="group flex items-center justify-center gap-3 bg-barberRed hover:bg-red-700 px-8 py-4 rounded-sm transition-all w-full md:w-auto block min-h-[52px]">
                     <i data-feather="chrome" class="w-5 h-5"></i>
                     <span class="font-gothic text-xl tracking-wider">GET STARTED WITH GOOGLE</span>
                 </a>
-                <a href="onboarding.html" class="group flex items-center gap-3 bg-white text-charcoal hover:bg-steamWhite px-8 py-4 rounded-sm transition-all w-full md:w-auto block">
+                <a href="onboarding.html" class="group flex items-center justify-center gap-3 bg-white text-charcoal hover:bg-steamWhite px-8 py-4 rounded-sm transition-all w-full md:w-auto block min-h-[52px]">
                     <i data-feather="command" class="w-5 h-5"></i>
                     <span class="font-gothic text-xl tracking-wider">CONTINUE WITH APPLE</span>
                 </a>
@@ -165,11 +211,10 @@
                 <div class="w-64 h-2 bg-white/10 rounded-full overflow-hidden relative">
                     <div class="absolute inset-0 barber-pole-bg w-1/2 rounded-full"></div>
                 </div>
-                <p class="text-sm uppercase tracking-widest text-steamWhite/40">No credit card required • Join 500+ shops already onboarded</p>
             </div>
         </div>
 
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 steam-float cursor-pointer" onclick="window.scrollTo(0, window.innerHeight)">
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 steam-float cursor-pointer" onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})" role="button" tabindex="0" aria-label="Scroll to next section">
             <div class="flex flex-col items-center gap-2">
                 <span class="text-xs font-gothic tracking-widest">SCROLL TO BOARD</span>
                 <i data-feather="chevron-down" class="text-barberRed"></i>
@@ -178,93 +223,95 @@
     </section>
 
     <!-- Value Props -->
-    <section id="features" class="py-24 bg-steamWhite text-charcoal newspaper-texture">
+    <section id="features" class="py-16 md:py-24 bg-steamWhite text-charcoal newspaper-texture snap-start">
         <div class="max-w-7xl mx-auto px-4">
-            <h2 class="font-gothic text-5xl md:text-7xl text-center mb-20 border-b-4 border-charcoal inline-block mx-auto">BUILT FOR BARBERS AND CUSTOMERS WHO BELIEVE IN THE CRAFT</h2>
-            
-            <div class="grid md:grid-cols-3 gap-12">
+            <h2 class="font-gothic text-3xl md:text-5xl lg:text-7xl text-center mb-12 md:mb-20 border-b-4 border-charcoal inline-block mx-auto px-4">for barbers and the customers who love their craft</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
                 <!-- Prop 1 -->
-                <div class="group p-8 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
-                    <div class="mb-6 h-48 overflow-hidden relative bg-charcoal flex items-center justify-center">
+                <div class="group p-6 md:p-8 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
+                    <div class="mb-4 md:mb-6 h-32 md:h-48 overflow-hidden relative bg-charcoal flex items-center justify-center">
                         <img src="http://static.photos/vintage/640x360/1" class="absolute inset-0 opacity-50 grayscale group-hover:scale-110 transition-transform duration-700" alt="Vintage Illustration">
                         <div class="relative z-10 text-steamWhite text-center p-4">
-                            <i data-feather="zap" class="w-12 h-12 mx-auto mb-2 text-barberRed"></i>
-                            <h3 class="font-gothic text-2xl">1-CLICK BOOKING</h3>
+                            <i data-feather="zap" class="w-10 h-10 md:w-12 md:h-12 mx-auto mb-2 text-barberRed"></i>
+                            <h3 class="font-gothic text-xl md:text-2xl">1-CLICK BOOKING</h3>
                         </div>
                     </div>
-                    <p class="font-serif italic text-lg mb-4">"Efficiency that respects the clock, quality that ignores it."</p>
-                    <p class="text-sm leading-relaxed opacity-70">Our mechanical booking engine handles the logistics so you can focus on the steel and skin.</p>
+                    <p class="font-serif italic text-base md:text-lg mb-3 md:mb-4">"Efficiency that respects the clock, quality that ignores it."</p>
+                    <p class="text-xs md:text-sm leading-relaxed opacity-70">Our mechanical booking engine handles the logistics so you can focus on the steel and skin.</p>
                 </div>
 
                 <!-- Prop 2 -->
-                <div class="group p-8 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
-                    <div class="mb-6 h-48 overflow-hidden relative bg-leather flex items-center justify-center">
+                <div class="group p-6 md:p-8 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
+                    <div class="mb-4 md:mb-6 h-32 md:h-48 overflow-hidden relative bg-leather flex items-center justify-center">
                         <img src="http://static.photos/leather/640x360/2" class="absolute inset-0 opacity-50 grayscale group-hover:scale-110 transition-transform duration-700" alt="Leather Journal">
                         <div class="relative z-10 text-steamWhite text-center p-4">
-                            <i data-feather="user" class="w-12 h-12 mx-auto mb-2 text-brass"></i>
-                            <h3 class="font-gothic text-2xl">CLIENT PORTAL</h3>
+                            <i data-feather="user" class="w-10 h-10 md:w-12 md:h-12 mx-auto mb-2 text-brass"></i>
+                            <h3 class="font-gothic text-xl md:text-2xl">CLIENT PORTAL</h3>
                         </div>
                     </div>
-                    <p class="font-serif italic text-lg mb-4">"A digital ledger for the modern gentleman."</p>
-                    <p class="text-sm leading-relaxed opacity-70">Every client gets a personalized dashboard to track their grooming journey and rewards.</p>
+                    <p class="font-serif italic text-base md:text-lg mb-3 md:mb-4">"A digital ledger for the modern gentleman."</p>
+                    <p class="text-xs md:text-sm leading-relaxed opacity-70">Every client gets a personalized dashboard to track their grooming journey and rewards.</p>
                 </div>
 
                 <!-- Prop 3 -->
-                <div class="group p-8 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
-                    <div class="mb-6 h-48 overflow-hidden relative bg-charcoal flex items-center justify-center">
+                <div class="group p-6 md:p-8 border-2 border-charcoal/10 hover:border-barberRed transition-all duration-500 bg-white/50">
+                    <div class="mb-4 md:mb-6 h-32 md:h-48 overflow-hidden relative bg-charcoal flex items-center justify-center">
                         <img src="http://static.photos/industry/640x360/3" class="absolute inset-0 opacity-50 grayscale group-hover:scale-110 transition-transform duration-700" alt="Smart Analytics">
                         <div class="relative z-10 text-steamWhite text-center p-4">
-                            <i data-feather="activity" class="w-12 h-12 mx-auto mb-2 text-barberRed"></i>
-                            <h3 class="font-gothic text-2xl">SMART ANALYTICS</h3>
+                            <i data-feather="activity" class="w-10 h-10 md:w-12 md:h-12 mx-auto mb-2 text-barberRed"></i>
+                            <h3 class="font-gothic text-xl md:text-2xl">SMART ANALYTICS</h3>
                         </div>
                     </div>
-                    <p class="font-serif italic text-lg mb-4">"Real-time pressure readings on scheduling, pricing, and flash sale discounts."</p>
-                    <p class="text-sm leading-relaxed opacity-70">Visual analytics styled like locomotive controls. Know your numbers at a glance.</p>
+                    <p class="font-serif italic text-base md:text-lg mb-3 md:mb-4">"Real-time pressure readings on scheduling, pricing, and flash sale discounts."</p>
+                    <p class="text-xs md:text-sm leading-relaxed opacity-70">Visual analytics styled like locomotive controls. Know your numbers at a glance.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Interactive Feature: Departure Board -->
-    <section class="py-24 bg-charcoal relative overflow-hidden">
+    <section class="py-16 md:py-24 bg-charcoal relative overflow-hidden snap-start">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center gap-16">
-                <div class="flex-1">
-                    <h3 class="font-gothic text-6xl mb-6 tracking-tighter">REAL-TIME <br><span class="text-barberRed">CHAIR NOTIFICATIONS</span></h3>
-                    <p class="text-xl text-steamWhite/60 mb-8">Never let a chair go cold. Our "Departure Board" system notifies your waitlist the second a slot opens up.</p>
+            <div class="flex flex-col items-center md:flex-row gap-8 md:gap-16">
+                <div class="flex-1 text-center md:text-left">
+                    <h3 class="font-gothic text-4xl md:text-6xl mb-4 md:mb-6 tracking-tighter">REAL-TIME <br><span class="text-barberRed">CHAIR NOTIFICATIONS</span></h3>
+                    <p class="text-lg md:text-xl text-steamWhite/60 mb-6 md:mb-8">Never let a chair go cold. Our "Departure Board" system notifies your waitlist the second a slot opens up.</p>
                     <div class="space-y-4">
-                        <div class="flex items-center gap-4 border-l-4 border-barberRed pl-6 py-2">
+                        <div class="flex items-center gap-4 border-l-4 border-barberRed pl-6 py-2 justify-center md:justify-start">
                             <i data-feather="check-circle" class="text-barberRed"></i>
-                            <span class="font-gothic text-xl">85% REDUCTION IN NO-SHOWS</span>
+                            <span class="font-gothic text-lg md:text-xl">85% REDUCTION IN NO-SHOWS</span>
                         </div>
-                        <div class="flex items-center gap-4 border-l-4 border-brass pl-6 py-2">
+                        <div class="flex items-center gap-4 border-l-4 border-brass pl-6 py-2 justify-center md:justify-start">
                             <i data-feather="check-circle" class="text-brass"></i>
-                            <span class="font-gothic text-xl">INSTANT SMS TELEGRAMS</span>
+                            <span class="font-gothic text-lg md:text-xl">INSTANT SMS TELEGRAMS</span>
                         </div>
                     </div>
                 </div>
-                <div class="flex-1 bg-black p-8 rounded-sm border-4 border-brass/30 shadow-2xl relative">
-                    <div class="absolute -top-4 -right-4 bg-barberRed px-4 py-1 font-gothic text-sm animate-pulse">LIVE BOARD</div>
-                    <div class="space-y-4 font-mono text-2xl">
-                        <div class="flex justify-between border-b border-white/10 pb-2">
-                            <span class="text-brass">CHAIR 01</span>
-                            <span class="text-green-500">OCCUPIED</span>
-                            <span class="text-white/40">14:30</span>
+                <div class="w-full md:w-auto mt-8 md:mt-0">
+                    <div class="bg-black p-6 md:p-8 rounded-sm border-4 border-brass/30 shadow-2xl relative overflow-x-auto">
+                        <div class="absolute -top-4 -right-4 bg-barberRed px-3 md:px-4 py-1 font-gothic text-xs md:text-sm animate-pulse">LIVE BOARD</div>
+                        <div class="space-y-4 font-mono text-lg md:text-2xl">
+                            <div class="flex justify-between border-b border-white/10 pb-2">
+                                <span class="text-brass">CHAIR 01</span>
+                                <span class="text-green-500">OCCUPIED</span>
+                                <span class="text-white/40">14:30</span>
+                            </div>
+                            <div class="flex justify-between border-b border-white/10 pb-2 bg-barberRed/10">
+                                <span class="text-brass">CHAIR 02</span>
+                                <span class="text-barberRed animate-pulse">OPEN</span>
+                                <span class="text-white">15:15</span>
+                            </div>
+                            <div class="flex justify-between border-b border-white/10 pb-2">
+                                <span class="text-brass">CHAIR 03</span>
+                                <span class="text-steamWhite/40">ARRIVING</span>
+                                <span class="text-white/40">15:45</span>
+                            </div>
                         </div>
-                        <div class="flex justify-between border-b border-white/10 pb-2 bg-barberRed/10">
-                            <span class="text-brass">CHAIR 02</span>
-                            <span class="text-barberRed animate-pulse">OPEN</span>
-                            <span class="text-white">15:15</span>
+                        <div class="mt-6 md:mt-8 text-center">
+                            <button class="font-gothic text-charcoal bg-brass px-6 md:px-8 py-3 min-h-[44px] hover:bg-yellow-600 transition-colors w-full md:w-auto mb-2 md:mb-0 md:mr-2">BROADCAST SIGNAL</button>
+                            <button id="add-to-queue-btn" class="font-gothic text-steamWhite bg-barberRed px-6 md:px-8 py-3 min-h-[44px] hover:bg-red-700 transition-colors w-full md:w-auto">ADD TO QUEUE</button>
                         </div>
-                        <div class="flex justify-between border-b border-white/10 pb-2">
-                            <span class="text-brass">CHAIR 03</span>
-                            <span class="text-steamWhite/40">ARRIVING</span>
-                            <span class="text-white/40">15:45</span>
-                        </div>
-                    </div>
-                    <div class="mt-8 text-center">
-                        <button class="font-gothic text-charcoal bg-brass px-8 py-2 hover:bg-yellow-600 transition-colors">BROADCAST SIGNAL</button>
-                        <button id="add-to-queue-btn" class="mt-4 font-gothic text-steamWhite bg-barberRed px-8 py-2 hover:bg-red-700 transition-colors">ADD TO QUEUE</button>
                     </div>
                 </div>
             </div>
@@ -272,29 +319,29 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-charcoal border-t border-white/10 py-12">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="flex items-center gap-4">
-                <img src="/uploads/1770458100780-9ayi9n.png" alt="Whistle Stop Logo" class="h-10 opacity-50 grayscale">
-                <p class="text-xs uppercase tracking-[0.4em] opacity-30">© 1929-2024 The Whistle Stop Barber's Suite</p>
+    <footer class="bg-charcoal border-t border-white/10 py-8 md:py-12 snap-start">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8">
+            <div class="flex flex-col items-center md:items-start gap-4">
+                <img src="assets/whistle-stop.png" alt="Whistle Stop Logo" class="h-8 md:h-10 opacity-50 grayscale">
+                <p class="text-xs uppercase tracking-[0.3em] md:tracking-[0.4em] opacity-30 text-center md:text-left">© 1929-2024 The Whistle Stop Barber's Suite</p>
             </div>
-            <div class="flex gap-8 opacity-50 text-xs uppercase tracking-widest">
-                <a href="#" class="hover:text-barberRed transition-colors">Privacy</a>
-                <a href="#" class="hover:text-barberRed transition-colors">Terms</a>
-                <a href="#" class="hover:text-barberRed transition-colors">Support</a>
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 opacity-50 text-xs uppercase tracking-widest">
+                <a href="#" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm px-1 py-1">Privacy</a>
+                <a href="#" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm px-1 py-1">Terms</a>
+                <a href="#" class="hover:text-barberRed transition-colors focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm px-1 py-1">Support</a>
             </div>
         </div>
     </footer>
 
     <!-- Chair Ready Notification Modal -->
-    <div id="chair-ready-modal" class="fixed inset-0 bg-black hidden z-50 flex items-center justify-center">
-        <div class="text-center p-8 max-w-md mx-auto">
-            <div class="animate-pulse mb-6">
-                <i data-feather="alert-triangle" class="w-24 h-24 text-barberRed mx-auto"></i>
+    <div id="chair-ready-modal" class="fixed inset-0 bg-black/90 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4" role="alertdialog" aria-modal="true" aria-labelledby="notification-title" aria-describedby="notification-desc">
+        <div class="text-center p-6 max-w-sm w-full bg-charcoal border border-white/20 rounded-sm">
+            <div class="animate-pulse mb-4">
+                <i data-feather="alert-triangle" class="w-16 h-16 md:w-24 md:h-24 text-barberRed mx-auto"></i>
             </div>
-            <h3 class="font-gothic text-4xl text-barberRed mb-4 animate-pulse">YOUR CHAIR IS READY!</h3>
-            <p class="text-2xl text-steamWhite mb-8">Please proceed to the shop</p>
-            <button id="dismiss-notification" class="font-gothic bg-barberRed text-steamWhite px-8 py-4 text-xl hover:bg-red-700 transition-colors">DISMISS</button>
+            <h3 id="notification-title" class="font-gothic text-2xl md:text-4xl text-barberRed mb-2 animate-pulse">YOUR CHAIR IS READY!</h3>
+            <p id="notification-desc" class="text-lg md:text-2xl text-steamWhite mb-6">Please proceed to the shop</p>
+            <button id="dismiss-notification" class="font-gothic bg-barberRed text-steamWhite px-6 md:px-8 py-3 md:py-4 text-lg md:text-xl min-h-[52px] hover:bg-red-700 transition-colors w-full focus:outline-none focus:ring-2 focus:ring-barberRed rounded-sm">DISMISS</button>
         </div>
     </div>
 
@@ -304,14 +351,16 @@
             feather.replace();
 
             // Hero Animations
-            anime({
-                targets: '.hero-reveal',
-                translateY: [30, 0],
-                opacity: [0, 1],
-                delay: anime.stagger(200),
-                duration: 1200,
-                easing: 'easeOutExpo'
-            });
+            if (typeof anime !== 'undefined') {
+                anime({
+                    targets: '.hero-reveal',
+                    translateY: [30, 0],
+                    opacity: [0, 1],
+                    delay: anime.stagger(200),
+                    duration: 1200,
+                    easing: 'easeOutExpo'
+                });
+            }
 
             // Mobile menu functionality
             const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -321,30 +370,60 @@
             const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
 
             function openMobileMenu() {
-                mobileMenuPanel.classList.remove('translate-x-full');
+                console.log('Opening mobile menu');
+                // Use a more direct approach to ensure the menu appears
+                mobileMenuPanel.style.transform = 'translateX(0)';
                 mobileMenuOverlay.classList.remove('hidden');
                 setTimeout(() => {
                     mobileMenuOverlay.classList.remove('opacity-0');
                     mobileMenuOverlay.classList.add('opacity-100');
                 }, 10);
                 document.body.style.overflow = 'hidden';
+
+                // Update ARIA attributes
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+
                 feather.replace();
             }
 
             function closeMobileMenu() {
-                mobileMenuPanel.classList.add('translate-x-full');
+                console.log('Closing mobile menu');
+                // Use a more direct approach to ensure the menu disappears
+                mobileMenuPanel.style.transform = 'translateX(100%)';
                 mobileMenuOverlay.classList.remove('opacity-100');
                 mobileMenuOverlay.classList.add('opacity-0');
                 setTimeout(() => {
                     mobileMenuOverlay.classList.add('hidden');
                 }, 300);
                 document.body.style.overflow = '';
+
+                // Update ARIA attributes
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
             }
 
+            // Initialize mobile menu state
             if (mobileMenuButton && mobileMenuPanel) {
+                console.log('Mobile menu elements found:', {
+                    button: !!mobileMenuButton,
+                    panel: !!mobileMenuPanel,
+                    overlay: !!mobileMenuOverlay,
+                    close: !!mobileMenuClose
+                });
+                
+                // Ensure initial state is closed
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+
                 mobileMenuButton.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    openMobileMenu();
+                    console.log('Hamburger menu clicked');
+                    e.preventDefault();
+                    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+                    console.log('Current expanded state:', isExpanded);
+
+                    if (isExpanded) {
+                        closeMobileMenu();
+                    } else {
+                        openMobileMenu();
+                    }
                 });
 
                 if (mobileMenuClose) {
@@ -359,15 +438,34 @@
                 mobileMenuLinks.forEach(link => {
                     link.addEventListener('click', closeMobileMenu);
                 });
+            } else {
+                console.error('Mobile menu elements not found:', {
+                    button: !!mobileMenuButton,
+                    panel: !!mobileMenuPanel
+                });
             }
 
             // Steam Whistle Scroll Trigger (Simulated)
-            window.addEventListener('scroll', () => {
+            let ticking = false;
+            
+            function updateScrollEffect() {
                 const scrollPos = window.scrollY;
                 if (scrollPos > 100) {
                     // Potential sound effect or visual whistle blow
                 }
-            });
+            }
+            
+            function requestTick() {
+                if (!ticking) {
+                    requestAnimationFrame(function() {
+                        updateScrollEffect();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }
+            
+            window.addEventListener('scroll', requestTick);
 
             // Chair Ready Notification Feature
             const addToQueueBtn = document.getElementById('add-to-queue-btn');
@@ -378,20 +476,20 @@
             function triggerChairNotification() {
                 // Show the modal
                 chairReadyModal.classList.remove('hidden');
-                
+
                 // Trigger browser vibration API if supported
                 if (navigator.vibrate) {
                     navigator.vibrate([100, 50, 100, 50, 100]);
                 }
-                
+
                 // Flashing effect by changing background color rapidly
                 let flashCount = 0;
                 const maxFlashes = 10; // 5 seconds of flashing (each flash cycle is ~0.5s)
-                
+
                 const flashInterval = setInterval(() => {
                     document.body.style.backgroundColor = flashCount % 2 === 0 ? '#C8102E' : '#1A1A1A';
                     flashCount++;
-                    
+
                     if (flashCount >= maxFlashes) {
                         clearInterval(flashInterval);
                         document.body.style.backgroundColor = ''; // Reset to original
@@ -407,13 +505,13 @@
                     this.textContent = 'QUEUED!';
                     this.classList.remove('bg-barberRed', 'hover:bg-red-700');
                     this.classList.add('bg-green-600', 'hover:bg-green-700');
-                    
+
                     setTimeout(() => {
                         this.textContent = originalText;
                         this.classList.add('bg-barberRed', 'hover:bg-red-700');
                         this.classList.remove('bg-green-600', 'hover:bg-green-700');
                     }, 2000);
-                    
+
                     // Simulate chair becoming available after 5 seconds
                     setTimeout(triggerChairNotification, 5000);
                 });
@@ -423,6 +521,17 @@
             if (dismissNotification) {
                 dismissNotification.addEventListener('click', function() {
                     chairReadyModal.classList.add('hidden');
+                });
+            }
+            
+            // Add keyboard support for scroll button
+            const scrollButton = document.querySelector('[onclick^="window.scrollTo"]');
+            if (scrollButton) {
+                scrollButton.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        window.scrollTo({top: window.innerHeight, behavior: 'smooth'});
+                    }
                 });
             }
         });
