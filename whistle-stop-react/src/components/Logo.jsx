@@ -1,6 +1,6 @@
 function Logo({ className = '' }) {
   return (
-    <div className={`logo-container flex flex-col items-center text-[#1a1a1a] text-center leading-[0.9] ${className}`}>
+    <div className={`logo-container flex flex-col items-center text-[#000000] text-center leading-[0.9] ${className}`}>
       <style>{`
         .logo-container {
           font-family: 'Oswald', sans-serif;
@@ -22,7 +22,7 @@ function Logo({ className = '' }) {
         .logo-barber-pole {
           width: 0.35em;
           height: 1.1em;
-          border: 0.03em solid #1a1a1a;
+          border: 0.03em solid #000000;
           border-radius: 0.4em;
           margin: 0 0.06em;
           position: relative;
@@ -87,7 +87,7 @@ function Logo({ className = '' }) {
       <div className="logo-the" style={{ fontSize: '0.4em', letterSpacing: '0.07em', marginBottom: '0.04em', fontWeight: 700 }}>THE</div>
       <div className="logo-whistle-row" style={{ display: 'flex', alignItems: 'center', fontSize: '1em', letterSpacing: '-0.01em', fontWeight: 700 }}>
         <span>WH</span>
-        <div className="logo-barber-pole" style={{ width: '0.35em', height: '1.1em', border: '0.03em solid #1a1a1a', borderRadius: '0.4em', margin: '0 0.06em', position: 'relative', overflow: 'hidden', background: 'rgba(255,255,255,0.15)', boxShadow: 'inset 0.04em 0 0.08em rgba(0,0,0,0.1)', zIndex: 1, flexShrink: 0 }}>
+        <div className="logo-barber-pole" style={{ width: '0.35em', height: '1.1em', border: '0.03em solid #000000', borderRadius: '0.4em', margin: '0 0.06em', position: 'relative', overflow: 'hidden', background: 'rgba(255,255,255,0.15)', boxShadow: 'inset 0.04em 0 0.08em rgba(0,0,0,0.1)', zIndex: 1, flexShrink: 0 }}>
           <div className="logo-stripes" />
           <div className="logo-glass-shine" />
         </div>

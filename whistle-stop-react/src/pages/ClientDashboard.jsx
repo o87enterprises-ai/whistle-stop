@@ -69,6 +69,20 @@ function ClientDashboard() {
   return (
     <div className="min-h-screen relative">
       <BackgroundScene bgImages={bgImages} />
+
+      {/* Mobile bottom tab bar - OUTSIDE z-10 wrapper */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-[100] bg-whistle-charcoal/95 backdrop-blur-xl border-t border-white/10 px-1 py-1.5 flex items-center justify-around">
+        {tabs.map(tab => {
+          const MobileIcon = Icons[tab.icon];
+          return (
+            <button key={tab.id} onClick={() => setClientTab(tab.id)} className={`flex flex-col items-center gap-0.5 px-1.5 py-1 rounded-lg transition-colors min-w-0 flex-1 ${clientTab === tab.id ? 'text-whistle-crimson' : 'text-gray-500'}`}>
+              <MobileIcon className="w-5 h-5" />
+              <span className="text-[9px] truncate">{tab.label}</span>
+            </button>
+          );
+        })}
+      </div>
+
       <div className="relative z-10">
       {/* Header */}
       <header className="bg-whistle-charcoal/80 backdrop-blur-xl border-b border-white/10 px-4 md:px-6 py-3 md:py-4 sticky top-0 z-40">
@@ -102,18 +116,6 @@ function ClientDashboard() {
             return (
               <button key={tab.id} onClick={() => setClientTab(tab.id)} className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2 ${clientTab === tab.id ? 'bg-whistle-crimson text-whistle-white shadow-lg shadow-whistle-crimson/30' : 'bg-whistle-grey/50 text-gray-400 hover:text-whistle-white hover:bg-whistle-grey'}`}>
                 <TabIcon className="w-4 h-4" />{tab.label}
-              </button>
-            );
-          })}
-        </div>
-        {/* Mobile bottom tab bar */}
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-whistle-charcoal/80 backdrop-blur-xl border-t border-white/10 px-1 py-1 flex items-center justify-around safe-area-bottom">
-          {tabs.map(tab => {
-            const MobileIcon = Icons[tab.icon];
-            return (
-              <button key={tab.id} onClick={() => setClientTab(tab.id)} className={`flex flex-col items-center gap-0.5 px-1.5 py-1.5 rounded-lg transition-colors min-w-0 flex-1 ${clientTab === tab.id ? 'text-whistle-crimson' : 'text-gray-500'}`}>
-                <MobileIcon className="w-5 h-5" />
-                <span className="text-[9px] truncate">{tab.label}</span>
               </button>
             );
           })}
@@ -377,10 +379,11 @@ function ClientDashboard() {
           </div>
         )}
       </div>
+      </div>
 
-      {/* Notification Panel */}
+      {/* Notification Panel - outside z-10 wrapper */}
       {showNotifications && (
-        <div className="fixed top-16 right-4 z-[60] w-80 md:w-96 glass-card max-h-[70vh] overflow-y-auto" style={{ animation: 'fadeIn 0.2s ease-out' }}>
+        <div className="fixed top-16 right-4 z-[110] w-80 md:w-96 glass-card max-h-[70vh] overflow-y-auto" style={{ animation: 'fadeIn 0.2s ease-out' }}>
           <div className="p-4 flex items-center justify-between border-b border-white/10">
             <h3 className="font-display font-bold text-sm">NOTIFICATIONS</h3>
             <div className="flex items-center gap-2">
@@ -409,12 +412,28 @@ function ClientDashboard() {
         </div>
       )}
 
-      {/* Shopping Cart */}
+      {/* Shopping Cart & Payment */}
       <ShoppingCart />
-      {/* Payment Modal for cart */}
       {paymentState.step && !paymentState.booking && <PaymentModal />}
 
-      </div>
+      {/* Booking payment modal */}
+      {bookingPayment && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[110] p-4">
+          <div className="glass-card p-6 max-w-md w-full" style={{ animation: 'fadeIn 0.3s ease-out' }}>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-display text-lg font-bold flex items-center gap-2"><Icons.Lock className="w-5 h-5 text-whistle-crimson" /> PAYMENT REQUIRED</h3>
+              <button onClick={() => setBookingPayment(null)} className="text-gray-400 hover:text-whistle-white"><Icons.X className="w-5 h-5" /></button>
+            </div>
+            <div className="bg-whistle-crimson/10 border border-whistle-crimson/30 rounded-lg p-4 mb-6">
+              <p className="text-xs text-gray-400 mb-1">Booking Details</p>
+              <p className="font-bold">{bookingPayment.service}</p>
+              <p className="text-sm text-gray-400">{bookingPayment.date} at {bookingPayment.time}</p>
+              <p className="text-sm text-gray-400">Barber: {bookingPayment.barber}</p>
+            </div>
+            <PaymentInline onComplete={() => setBookingPayment(null)} total={bookingPayment.price} booking={bookingPayment} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

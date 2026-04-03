@@ -98,6 +98,20 @@ function AdminDashboard() {
   return (
     <div className="min-h-screen bg-whistle-black relative">
       <BackgroundScene bgImages={bgImages} />
+
+      {/* Mobile bottom tab bar - OUTSIDE z-10 wrapper */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-[100] bg-whistle-charcoal/95 backdrop-blur-xl border-t border-white/10 px-2 py-1.5 flex items-center justify-around">
+        {tabs.map((item) => {
+          const MobileIcon = Icons[item.icon];
+          return (
+            <button key={item.id} onClick={() => setAdminTab(item.id)} className={`flex flex-col items-center gap-0.5 px-1.5 py-1 rounded-lg transition-colors min-w-0 flex-1 ${adminTab === item.id ? 'text-whistle-crimson' : 'text-gray-500'}`}>
+              <MobileIcon className="w-5 h-5" />
+              <span className="text-[9px] truncate">{item.label}</span>
+            </button>
+          );
+        })}
+      </div>
+
       <div className="relative z-10">
       {/* Top Nav */}
       <header className="bg-whistle-charcoal/80 backdrop-blur-xl border-b border-white/10 px-3 md:px-4 py-3 sticky top-0 z-40">
@@ -119,7 +133,7 @@ function AdminDashboard() {
       {showApiKeys && <ApiKeysPanel Icons={Icons} />}
 
       <div className="flex">
-        {/* Sidebar - horizontal scroll on mobile, vertical on desktop */}
+        {/* Sidebar - desktop only */}
         <aside className="hidden md:flex md:w-16 md:bg-whistle-charcoal/80 md:backdrop-blur-xl md:border-r md:border-white/10 md:min-h-screen md:py-4 md:flex-col md:items-center md:gap-2">
           {tabs.map((item) => {
             const SidebarIcon = Icons[item.icon];
@@ -128,18 +142,6 @@ function AdminDashboard() {
             );
           })}
         </aside>
-        {/* Mobile tab bar */}
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-whistle-charcoal/80 backdrop-blur-xl border-t border-white/10 px-2 py-2 flex items-center justify-around">
-          {tabs.map((item) => {
-            const MobileIcon = Icons[item.icon];
-            return (
-              <button key={item.id} onClick={() => setAdminTab(item.id)} className={`flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg transition-colors min-w-0 flex-1 ${adminTab === item.id ? 'text-whistle-crimson' : 'text-gray-500'}`}>
-                <MobileIcon className="w-5 h-5" />
-                <span className="text-[10px] truncate">{item.label}</span>
-              </button>
-            );
-          })}
-        </div>
 
         {/* Main Content */}
         <main className="flex-1 p-4 md:p-6 overflow-auto pb-20 md:pb-6">
