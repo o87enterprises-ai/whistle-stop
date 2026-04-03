@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/barber-pole.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>THE WHISTLE STOP | Modern Companion for Classic Craftsmanship</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'whistle': {
+                black: '#0a0a0a',
+                charcoal: '#1a1a1a',
+                grey: '#2a2a2a',
+                crimson: '#dc2626',
+                red: '#b91c1c',
+                white: '#f5f5f5',
+                accent: '#991b1b',
+              }
+            },
+            fontFamily: {
+              'display': ['Oswald', 'sans-serif'],
+              'body': ['Inter', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
