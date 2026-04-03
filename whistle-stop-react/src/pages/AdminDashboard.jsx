@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import BackgroundScene from '../components/BackgroundScene';
+import Logo from '../components/Logo';
 
 function MiniBarChart({ data, height = 120 }) {
   const maxVal = Math.max(...data.map(d => d.hours));
@@ -102,7 +103,7 @@ function AdminDashboard() {
       <header className="bg-whistle-charcoal/80 backdrop-blur-xl border-b border-white/10 px-3 md:px-4 py-3 sticky top-0 z-40">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 md:gap-6">
-            <div className="flex items-center gap-2"><div className="w-7 h-7 md:w-8 md:h-8 bg-whistle-crimson rounded flex items-center justify-center"><Icons.Home className="w-3.5 h-3.5 md:w-4 md:h-4" /></div><span className="font-display text-base md:text-lg font-bold">THE WHISTLE STOP</span></div>
+            <div className="flex items-center gap-2 text-whistle-white" style={{ fontSize: 'clamp(0.8rem, 2.5vw, 1.2rem)' }}><Logo /></div>
             <nav className="hidden md:flex items-center gap-2">{tabs.map(item => (<button key={item.id} onClick={() => setAdminTab(item.id)} className={`px-3 py-2 rounded text-sm capitalize transition-colors ${adminTab === item.id ? 'bg-whistle-crimson text-whistle-white' : 'text-gray-400 hover:text-whistle-white hover:bg-whistle-grey'}`}>{item.label}</button>))}</nav>
           </div>
           <div className="flex items-center gap-2 md:gap-4">

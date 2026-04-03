@@ -1,0 +1,22 @@
+{
+  "app_name": "Whistle Stop",
+  "permanent_mission": "Barber Shop Management System - specifically for barbers/salons",
+  "vision_holder": "O'Shea",
+  "created_date": "2025-02-14",
+  "non_negotiable_identity": [
+    "MUST remain barber/salon focused",
+    "NOT a generic appointment system", 
+    "Template for Shampoo Dolls POC validation",
+    "Critical path: Blocks Shampoo Dolls launch"
+  ],
+  "core_functionality": [
+    "Appointment scheduling for barber services",
+    "Inventory management for salon products", 
+    "Payment processing integrated with Stripe",
+    "Customer loyalty program",
+    "Mobile-optimized for salon clients"
+  ],
+  "current_status": "80% complete - backend structured, frontend ready",
+  "blocker": "Must complete before Shampoo Dolls can start",
+  "original_vision_preserved": "YES - this file cannot be altered by agents"
+}

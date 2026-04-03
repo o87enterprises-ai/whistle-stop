@@ -1,0 +1,13 @@
+{
+  "task_id": "WS-001",
+  "app_name": "WHISTLE STOP",
+  "assigned_by": "CTO (Ollama)",
+  "assigned_to": "OpenSpec",
+  "task_type": "Backend API Completion",
+  "description": "Complete remaining 20% backend functionality for appointment scheduling system",
+  "priority": "CRITICAL_PATH",
+  "requires_approval": true,
+  "status": "awaiting_review",
+  "mission_file": "../app_manifests/whistle_stop_mission.json",
+  "created_date": "$(date +%Y-%m-%d)"
+}

@@ -4,6 +4,7 @@ import BackgroundScene from '../components/BackgroundScene';
 import { ShoppingCart, PaymentModal } from '../components/ShoppingCart';
 import ChairAvailabilityQueue from '../components/ChairAvailabilityQueue';
 import PaymentInline from '../components/PaymentInline';
+import Logo from '../components/Logo';
 
 const hairStyles = [
   { name: 'Classic Fade', url: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=300&q=80' },
@@ -74,7 +75,7 @@ function ClientDashboard() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button onClick={() => navigate('/')} className="text-gray-400 hover:text-whistle-white"><Icons.Home className="w-4 h-4 md:w-5 md:h-5" /></button>
-            <h1 className="font-display text-base md:text-lg font-bold">THE WHISTLE STOP</h1>
+            <div className="text-whistle-white" style={{ fontSize: 'clamp(0.8rem, 2.5vw, 1.2rem)' }}><Logo /></div>
           </div>
           <div className="flex items-center gap-2 md:gap-4">
             {/* Notifications */}

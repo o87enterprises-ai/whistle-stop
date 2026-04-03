@@ -1,0 +1,151 @@
+{
+  "system_name": "10-Apps Automated Development Framework",
+  "created_date": "2025-02-14",
+  "architect": "O'Shea (Final Approval Authority)",
+  "core_principle": "Preserve original app vision - prevent mission drift",
+  "agent_hierarchy": {
+    "level_1_cto": {
+      "claude_code": {
+        "role": "CTO - Project Distribution & Oversight",
+        "status": "ON_HAITUS_UNTIL_2/17",
+        "current_substitute": "OLLAMA",
+        "responsibilities": [
+          "Distribute projects to Senior Engineer",
+          "Oversee progress across all projects",
+          "Submit progress reports to O'Shea for final approval"
+        ],
+        "reports_to": "O'Shea"
+      },
+      "ollama": {
+        "role": "CTO Substitute (Temporary)",
+        "active_period": "NOW_UNTIL_2/17",
+        "responsibilities": [
+          "Perform Claude Code duties during absence",
+          "Maintain context continuity",
+          "Ensure no vision drift during transition"
+        ],
+        "notes": "MUST PRESERVE CLAUDE CODE'S CONTEXT"
+      }
+    },
+    "level_2_senior_engineer": {
+      "openspec": {
+        "role": "Senior Engineer - Action Plan Approval",
+        "responsibilities": [
+          "Review current project state",
+          "Approve action plans based on vision requirements",
+          "Define necessary tasks to fulfill vision",
+          "Provide guidelines to dev team"
+        ],
+        "reports_to": "CTO (Claude Code/Ollama)"
+      }
+    },
+    "level_3_development_team": {
+      "claude_desktop": {
+        "role": "Dev - Light Tasks & Configs",
+        "responsibilities": [
+          "Receive tasks from OpenSpec",
+          "Create action plans according to OpenSpec guidelines",
+          "Submit action plans for approval",
+          "Execute approved tasks"
+        ],
+        "reports_to": "OpenSpec"
+      },
+      "opencode": {
+        "role": "Dev - Frontend Components",
+        "responsibilities": [
+          "Receive tasks from OpenSpec",
+          "Create action plans according to OpenSpec guidelines",
+          "Submit action plans for approval",
+          "Execute approved tasks"
+        ],
+        "reports_to": "OpenSpec"
+      },
+      "qwen_code": {
+        "role": "Dev - Backend/Heavy Tasks",
+        "responsibilities": [
+          "Receive tasks from OpenSpec",
+          "Create action plans according to OpenSpec guidelines",
+          "Submit action plans for approval",
+          "Execute approved tasks"
+        ],
+        "reports_to": "OpenSpec"
+      }
+    }
+  },
+  "approval_workflow": {
+    "step_1": "CTO (Claude Code/Ollama) distributes project to OpenSpec",
+    "step_2": "OpenSpec reviews state → creates task guidelines",
+    "step_3": "Devs (Claude Desktop/OpenCode/Qwen Code) create action plans",
+    "step_4": "OpenSpec approves action plans",
+    "step_5": "Devs execute tasks",
+    "step_6": "FINAL CODE REVIEW (Proxy Ollama inference)",
+    "step_7": "CTO oversees progress → submits to O'Shea",
+    "step_8": "O'Shea provides final approval"
+  },
+  "project_portfolio": {
+    "whistle_stop": {
+      "current_status": "80%",
+      "priority": "CRITICAL",
+      "blocker_note": "MUST COMPLETE BEFORE SHAMPOO_DOLLS",
+      "assigned_primary": "qwen_code",
+      "current_cto": "OLLAMA (substituting)"
+    },
+    "trm": {
+      "current_status": "FE_50%_BE_70%",
+      "priority": "HIGH",
+      "assigned_frontend": "opencode",
+      "assigned_backend": "qwen_code",
+      "current_cto": "OLLAMA (substituting)"
+    },
+    "brot_bot": {
+      "current_status": "BE_10%_FE_0%",
+      "priority": "MEDIUM",
+      "blocker_note": "YouTube transcript issue",
+      "assigned_primary": "qwen_code",
+      "current_cto": "OLLAMA (substituting)"
+    },
+    "munch": {
+      "current_status": "PRODUCTION_READY",
+      "priority": "MAINTENANCE",
+      "vision_note": "DATING ADVICE AI - NOT FOOD RELATED",
+      "assigned_primary": "claude_desktop",
+      "current_cto": "OLLAMA (substituting)"
+    },
+    "siteforge": {
+      "current_status": "55%",
+      "priority": "HIGH",
+      "assigned_primary": "opencode",
+      "current_cto": "OLLAMA (substituting)"
+    },
+    "trumpgpt": {
+      "current_status": "5%_PLANNING",
+      "priority": "MEDIUM",
+      "assigned_primary": "qwen_code",
+      "current_cto": "OLLAMA (substituting)"
+    },
+    "shampoo_dolls": {
+      "current_status": "0%_BLOCKED",
+      "priority": "CRITICAL",
+      "blocker_note": "WAITING FOR WHISTLE_STOP COMPLETION",
+      "assigned_primary": "opencode",
+      "current_cto": "OLLAMA (substituting)"
+    },
+    "brok": {
+      "current_status": "NEWLY_DEFINED",
+      "priority": "LOW",
+      "assigned_primary": "opencode",
+      "current_cto": "OLLAMA (substituting)"
+    },
+    "truegle_maps": {
+      "current_status": "95%",
+      "priority": "LOW",
+      "assigned_primary": "claude_desktop",
+      "current_cto": "OLLAMA (substituting)"
+    }
+  },
+  "context_preservation_rules": {
+    "ollama_substitution": "MUST maintain Claude Code's context during hiatus",
+    "vision_integrity": "All action plans must align with O'Shea's original vision",
+    "approval_chain": "No tasks proceed without OpenSpec approval → CTO oversight → O'Shea final approval"
+  }
+}

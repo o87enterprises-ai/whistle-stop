@@ -2,21 +2,7 @@ import { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import BackgroundScene from '../components/BackgroundScene';
 import ChairAvailabilityQueue from '../components/ChairAvailabilityQueue';
-
-function BarberPole3D() {
-  return (
-    <div className="relative w-32 h-32 mx-auto">
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-16 h-28 relative overflow-hidden rounded-full border-2 border-gray-600" style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(4px)' }}>
-          <div className="absolute inset-0" style={{ background: 'repeating-linear-gradient(45deg, #dc2626, #dc2626 8px, #f5f5f5 8px, #f5f5f5 16px, #1a1a1a 16px, #1a1a1a 24px)', animation: 'barberSlide 2s linear infinite' }} />
-        </div>
-        <div className="absolute -top-1 w-16 h-4 bg-gradient-to-b from-gray-300 to-gray-500 rounded-t-full" />
-        <div className="absolute -bottom-1 w-16 h-4 bg-gradient-to-b from-gray-500 to-gray-300 rounded-b-full" />
-      </div>
-      <style>{`@keyframes barberSlide { 0% { background-position: 0 0; } 100% { background-position: 0 100%; } }`}</style>
-    </div>
-  );
-}
+import Logo from '../components/Logo';
 
 function LandingPage() {
   const { navigate, appointments, Icons, bgImages } = useApp();
@@ -27,9 +13,8 @@ function LandingPage() {
     <>
       <BackgroundScene bgImages={bgImages} />
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 pt-24 pb-12">
-        <div style={{ animation: 'fadeSlideUp 0.8s ease-out' }}>
-          <BarberPole3D />
-          <h1 className="font-display text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-whistle-white text-center mt-4 md:mt-6 mb-3 md:mb-4">THE WHISTLE STOP</h1>
+        <div style={{ animation: 'fadeSlideUp 0.8s ease-out', fontSize: 'clamp(3rem, 12vw, 8rem)' }}>
+          <Logo />
           <p className="text-sm md:text-base lg:text-lg text-gray-400 max-w-2xl mx-auto text-center font-light leading-relaxed px-2">A modern companion for classic craftsmanship. Experience precision grooming, or manage your craft, from one central platform.</p>
           <p className="text-xs text-gray-600 mt-3 md:mt-4 tracking-widest uppercase text-center">(Select your path below to begin)</p>
         </div>
